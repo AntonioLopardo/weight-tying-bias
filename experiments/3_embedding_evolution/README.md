@@ -21,6 +21,9 @@ Tracks how input and output embedding matrices evolve during training in untied 
 # Figure 3: OLMo-1B-0724
 python track_evolution.py --config configs/evolution_olmo_1b.json
 
+# Figure 8: OLMo-7B-0724
+python track_evolution.py --config configs/evolution_olmo_7b.json
+
 # Figure 9: Pythia-1B  
 python track_evolution.py --config configs/evolution_pythia_1b.json
 
@@ -49,8 +52,13 @@ Configs specify HuggingFace model checkpoints with verified revision names:
 
 ## Available Configs
 
-- `configs/evolution_olmo_1b.json` - OLMo-1B-0724 checkpoints (0-100K steps)
-- `configs/evolution_pythia_1b.json` - Pythia-1B checkpoints (0-14K steps)
+| Config | Model | Steps | Paper Figure |
+|--------|-------|-------|--------------|
+| `configs/evolution_olmo_1b.json` | OLMo-1B-0724 (untied) | 0-100K | Figure 3 |
+| `configs/evolution_pythia_1b.json` | Pythia-1B (untied) | 0-14K | Figure 9 |
+| `configs/evolution_olmo_7b.json` | OLMo-7B-0724 (untied) | 0-50K | Figure 8 |
+
+**Note:** OLMo-7B has a larger batch size (4M tokens/step vs 2M), so token counts differ from 1B.
 
 ## Output
 

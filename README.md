@@ -112,14 +112,34 @@ python main.py plot-logfreq-vs-l2 --config configs/tok_config_olmo_1b_both.json
 
 ## Models
 
-| Model | Weight Tying | Paper Role |
-|-------|--------------|------------|
-| OLMo-1B-hf | Tied | Main comparison |
-| OLMo-1B-0724-hf | Untied | Main comparison |
-| GPT-Neo-2.7B | Tied | Cross-family validation |
-| Pythia-2.8B | Untied | Cross-family validation |
-| Qwen3-4B | Tied | Scale-dependent validation |
-| Qwen3-8B | Untied | Scale-dependent validation |
+See **[MODELS.md](MODELS.md)** for a comprehensive list of all models, their HuggingFace IDs, checkpoint formats, and paper references.
+
+| Model | HuggingFace ID | Weight Tying | Paper Role |
+|-------|---------------|--------------|------------|
+| OLMo-1B | `allenai/OLMo-1B-hf` | **Tied** | Main comparison |
+| OLMo-1B-0724 | `allenai/OLMo-1B-0724-hf` | Untied | Main comparison |
+| GPT-Neo-2.7B | `EleutherAI/gpt-neo-2.7B` | **Tied** | Cross-family validation |
+| Pythia-2.8B | `EleutherAI/pythia-2.8b` | Untied | Cross-family validation |
+| Qwen3-4B | `Qwen/Qwen3-4B` | **Tied** | Scale-dependent validation |
+| Qwen3-8B | `Qwen/Qwen3-8B` | Untied | Scale-dependent validation |
+
+### Loading Models with Specific Checkpoints
+
+```python
+from transformers import AutoModelForCausalLM
+
+# OLMo at step 10000 (for Figure 3)
+model = AutoModelForCausalLM.from_pretrained(
+    "allenai/OLMo-1B-0724-hf",
+    revision="step10000-tokens20B"
+)
+
+# Pythia at step 1000 (for Figure 9)
+model = AutoModelForCausalLM.from_pretrained(
+    "EleutherAI/pythia-1b",
+    revision="step1000"
+)
+```
 
 ## Key Results
 
