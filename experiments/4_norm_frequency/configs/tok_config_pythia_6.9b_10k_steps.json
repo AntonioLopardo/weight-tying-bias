@@ -1,0 +1,13 @@
+{
+  "pythia-6.9b-step0": { "class": "huggingface", "path": "EleutherAI/pythia-6.9b", "revision": "step0" },
+  "pythia-6.9b-step10000": { "class": "huggingface", "path": "EleutherAI/pythia-6.9b", "revision": "step10000" },
+  "pythia-6.9b-step20000": { "class": "huggingface", "path": "EleutherAI/pythia-6.9b", "revision": "step20000" },
+  "pythia-6.9b-step30000": { "class": "huggingface", "path": "EleutherAI/pythia-6.9b", "revision": "step30000" },
+  "pythia-6.9b-step40000": { "class": "huggingface", "path": "EleutherAI/pythia-6.9b", "revision": "step40000" },
+  "pythia-6.9b-step50000": { "class": "huggingface", "path": "EleutherAI/pythia-6.9b", "revision": "step50000" },
+  "pythia-6.9b-step60000": { "class": "huggingface", "path": "EleutherAI/pythia-6.9b", "revision": "step60000" },
+  "pythia-6.9b-step70000": { "class": "huggingface", "path": "EleutherAI/pythia-6.9b", "revision": "step70000" },
+  "pythia-6.9b-step80000": { "class": "huggingface", "path": "EleutherAI/pythia-6.9b", "revision": "step80000" },
+  "pythia-6.9b-step90000": { "class": "huggingface", "path": "EleutherAI/pythia-6.9b", "revision": "step90000" }
+}
+

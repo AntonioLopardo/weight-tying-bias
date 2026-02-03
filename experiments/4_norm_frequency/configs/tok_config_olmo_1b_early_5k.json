@@ -1,0 +1,128 @@
+{
+  "olmo-1b-0724-step0": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-1B-0724-hf",
+    "revision": "step0-tokens0B"
+  },
+  "olmo-1b-0724-step5000": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-1B-0724-hf",
+    "revision": "step5000-tokens10B"
+  },
+  "olmo-1b-0724-step10000": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-1B-0724-hf",
+    "revision": "step10000-tokens20B"
+  },
+  "olmo-1b-0724-step15000": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-1B-0724-hf",
+    "revision": "step15000-tokens31B"
+  },
+  "olmo-1b-0724-step20000": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-1B-0724-hf",
+    "revision": "step20000-tokens41B"
+  },
+  "olmo-1b-0724-step25000": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-1B-0724-hf",
+    "revision": "step25000-tokens52B"
+  },
+  "olmo-1b-0724-step30000": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-1B-0724-hf",
+    "revision": "step30000-tokens62B"
+  },
+  "olmo-1b-0724-step35000": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-1B-0724-hf",
+    "revision": "step35000-tokens73B"
+  },
+  "olmo-1b-0724-step40000": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-1B-0724-hf",
+    "revision": "step40000-tokens83B"
+  },
+  "olmo-1b-0724-step45000": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-1B-0724-hf",
+    "revision": "step45000-tokens94B"
+  },
+  "olmo-1b-0724-step50000": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-1B-0724-hf",
+    "revision": "step50000-tokens104B"
+  },
+  "olmo-1b-0724-step55000": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-1B-0724-hf",
+    "revision": "step55000-tokens115B"
+  },
+  "olmo-1b-0724-step60000": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-1B-0724-hf",
+    "revision": "step60000-tokens125B"
+  },
+  "olmo-1b-0724-step65000": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-1B-0724-hf",
+    "revision": "step65000-tokens136B"
+  },
+  "olmo-1b-0724-step70000": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-1B-0724-hf",
+    "revision": "step70000-tokens146B"
+  },
+  "olmo-1b-0724-step75000": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-1B-0724-hf",
+    "revision": "step75000-tokens157B"
+  },
+  "olmo-1b-0724-step80000": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-1B-0724-hf",
+    "revision": "step80000-tokens167B"
+  },
+  "olmo-1b-0724-step85000": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-1B-0724-hf",
+    "revision": "step85000-tokens178B"
+  },
+  "olmo-1b-0724-step90000": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-1B-0724-hf",
+    "revision": "step90000-tokens188B"
+  },
+  "olmo-1b-0724-step95000": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-1B-0724-hf",
+    "revision": "step95000-tokens199B"
+  },
+  "olmo-1b-0724-step100000": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-1B-0724-hf",
+    "revision": "step100000-tokens209B"
+  },
+  "olmo-1b-0724-step105000": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-1B-0724-hf",
+    "revision": "step105000-tokens220B"
+  },
+  "olmo-1b-0724-step110000": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-1B-0724-hf",
+    "revision": "step110000-tokens230B"
+  },
+  "olmo-1b-0724-step115000": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-1B-0724-hf",
+    "revision": "step115000-tokens241B"
+  },
+  "olmo-1b-0724-step120000": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-1B-0724-hf",
+    "revision": "step120000-tokens251B"
+  }
+}
+

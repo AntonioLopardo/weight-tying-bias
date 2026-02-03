@@ -1,0 +1,3 @@
+{
+  "llama-3.2-1b": { "class": "huggingface", "path": "meta-llama/Llama-3.2-1B"}
+}

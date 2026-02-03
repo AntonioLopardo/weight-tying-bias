@@ -1,0 +1,12 @@
+{
+  "olmo-7b-0424-step0": { "class": "huggingface", "path": "allenai/OLMo-7B-0424-hf", "revision": "step0-tokens0B" },
+  "olmo-7b-0424-step10000": { "class": "huggingface", "path": "allenai/OLMo-7B-0424-hf", "revision": "step10000-tokens41B" },
+  "olmo-7b-0424-step20000": { "class": "huggingface", "path": "allenai/OLMo-7B-0424-hf", "revision": "step20000-tokens83B" },
+  "olmo-7b-0424-step30000": { "class": "huggingface", "path": "allenai/OLMo-7B-0424-hf", "revision": "step30000-tokens125B" },
+  "olmo-7b-0424-step40000": { "class": "huggingface", "path": "allenai/OLMo-7B-0424-hf", "revision": "step40000-tokens167B" },
+  "olmo-7b-0424-step50000": { "class": "huggingface", "path": "allenai/OLMo-7B-0424-hf", "revision": "step50000-tokens209B" },
+  "olmo-7b-0424-step60000": { "class": "huggingface", "path": "allenai/OLMo-7B-0424-hf", "revision": "step60000-tokens251B" },
+  "olmo-7b-0424-step70000": { "class": "huggingface", "path": "allenai/OLMo-7B-0424-hf", "revision": "step70000-tokens293B" },
+  "olmo-7b-0424-step80000": { "class": "huggingface", "path": "allenai/OLMo-7B-0424-hf", "revision": "step80000-tokens335B" },
+  "olmo-7b-0424-step90000": { "class": "huggingface", "path": "allenai/OLMo-7B-0424-hf", "revision": "step90000-tokens377B" }
+}

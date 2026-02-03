@@ -1,0 +1,3 @@
+{
+"pythia-1b": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "family": "Pythia"}
+}

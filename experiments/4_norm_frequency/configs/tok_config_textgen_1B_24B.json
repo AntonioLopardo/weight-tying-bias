@@ -1,0 +1,330 @@
+{
+  "qwen2.5-3b-instruct": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen2.5-3B-Instruct"
+  },
+  "llama-3.1-8b-instruct": {
+    "class": "huggingface",
+    "path": "meta-llama/Llama-3.1-8B-Instruct"
+  },
+  "qwen2.5-7b-instruct": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen2.5-7B-Instruct"
+  },
+  "llama-3.2-1b-instruct": {
+    "class": "huggingface",
+    "path": "meta-llama/Llama-3.2-1B-Instruct"
+  },
+  "gpt-oss-20b": {
+    "class": "huggingface",
+    "path": "openai/gpt-oss-20b"
+  },
+  "gemma-3-1b-it": {
+    "class": "huggingface",
+    "path": "google/gemma-3-1b-it"
+  },
+  "qwen2.5-1.5b-instruct": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen2.5-1.5B-Instruct"
+  },
+  "meta-llama-llama-3.2-3b-instruct-fp16": {
+    "class": "huggingface",
+    "path": "context-labs/meta-llama-Llama-3.2-3B-Instruct-FP16"
+  },
+  "tinyllama-1.1b-chat-v1.0": {
+    "class": "huggingface",
+    "path": "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+  },
+  "llama-3.2-1b": {
+    "class": "huggingface",
+    "path": "meta-llama/Llama-3.2-1B"
+  },
+  "qwen3-8b": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen3-8B"
+  },
+  "llama-2-7b": {
+    "class": "huggingface",
+    "path": "meta-llama/Llama-2-7b-hf"
+  },
+  "qwen2.5-7b": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen2.5-7B"
+  },
+  "meta-llama-3-8b": {
+    "class": "huggingface",
+    "path": "meta-llama/Meta-Llama-3-8B"
+  },
+  "llama-3.2-3b-instruct": {
+    "class": "huggingface",
+    "path": "meta-llama/Llama-3.2-3B-Instruct"
+  },
+  "qwen3-4b-instruct-2507": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen3-4B-Instruct-2507"
+  },
+  "deepseek-r1-distill-llama-8b": {
+    "class": "huggingface",
+    "path": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B"
+  },
+  "qwen3-4b": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen3-4B"
+  },
+  "qwen2.5-14b-instruct": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen2.5-14B-Instruct"
+  },
+  "llama-2-7b-chat": {
+    "class": "huggingface",
+    "path": "meta-llama/Llama-2-7b-chat-hf"
+  },
+  "qwen3-14b": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen3-14B"
+  },
+  "meta-llama-3-8b-instruct": {
+    "class": "huggingface",
+    "path": "meta-llama/Meta-Llama-3-8B-Instruct"
+  },
+  "nemotron-research-reasoning-qwen-1.5b": {
+    "class": "huggingface",
+    "path": "nvidia/Nemotron-Research-Reasoning-Qwen-1.5B"
+  },
+  "zephyr-7b-beta": {
+    "class": "huggingface",
+    "path": "HuggingFaceH4/zephyr-7b-beta"
+  },
+  "gpt-oss-20b-mxfp4-q8": {
+    "class": "huggingface",
+    "path": "mlx-community/gpt-oss-20b-MXFP4-Q8"
+  },
+  "mistral-7b-instruct-v0.2": {
+    "class": "huggingface",
+    "path": "mistralai/Mistral-7B-Instruct-v0.2"
+  },
+  "qwen3-1.7b": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen3-1.7B"
+  },
+  "olmo-2-0425-1b": {
+    "class": "huggingface",
+    "path": "allenai/OLMo-2-0425-1B"
+  },
+  "qwen2-1.5b-instruct": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen2-1.5B-Instruct"
+  },
+  "gemma-2-2b-it": {
+    "class": "huggingface",
+    "path": "google/gemma-2-2b-it"
+  },
+  "meta-llama-3.1-8b-instruct": {
+    "class": "huggingface",
+    "path": "unsloth/Meta-Llama-3.1-8B-Instruct"
+  },
+  "meta-llama-3.1-8b-instruct-bnb-4bit": {
+    "class": "huggingface",
+    "path": "unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit"
+  },
+  "qwen2.5-coder-7b-instruct": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen2.5-Coder-7B-Instruct"
+  },
+  "llama-3.1-8b": {
+    "class": "huggingface",
+    "path": "meta-llama/Llama-3.1-8B"
+  },
+  "deepseek-r1-distill-qwen-7b": {
+    "class": "huggingface",
+    "path": "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
+  },
+  "qwen3-embedding-4b": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen3-Embedding-4B"
+  },
+  "deepseek-r1-distill-qwen-1.5b": {
+    "class": "huggingface",
+    "path": "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
+  },
+  "qwen3-4b-thinking-2507-mlx-4bit": {
+    "class": "huggingface",
+    "path": "lmstudio-community/Qwen3-4B-Thinking-2507-MLX-4bit"
+  },
+  "qwen3-4b-thinking-2507-mlx-8bit": {
+    "class": "huggingface",
+    "path": "lmstudio-community/Qwen3-4B-Thinking-2507-MLX-8bit"
+  },
+  "qwen3-4b-thinking-2507-mlx-6bit": {
+    "class": "huggingface",
+    "path": "lmstudio-community/Qwen3-4B-Thinking-2507-MLX-6bit"
+  },
+  "qwen3-8b-train-quasar-0809": {
+    "class": "huggingface",
+    "path": "xihc-ucb/Qwen3-8B-train-Quasar-0809"
+  },
+  "llama-3.2-3b": {
+    "class": "huggingface",
+    "path": "meta-llama/Llama-3.2-3B"
+  },
+  "qwen3-embedding-8b": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen3-Embedding-8B"
+  },
+  "powermoe-3b": {
+    "class": "huggingface",
+    "path": "ibm-research/PowerMoE-3b"
+  },
+  "qwen2.5-7b-instruct-gptq-int4": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen2.5-7B-Instruct-GPTQ-Int4"
+  },
+  "llama-3.2-3b-instruct-v2": {
+    "class": "huggingface",
+    "path": "unsloth/Llama-3.2-3B-Instruct"
+  },
+  "llama-guard-3-8b": {
+    "class": "huggingface",
+    "path": "meta-llama/Llama-Guard-3-8B"
+  },
+  "llada-8b-instruct": {
+    "class": "huggingface",
+    "path": "GSAI-ML/LLaDA-8B-Instruct"
+  },
+  "qwen2.5-7b-instruct-v2": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen2.5-7B-Instruct-AWQ"
+  },
+  "saiga_llama3_8b": {
+    "class": "huggingface",
+    "path": "IlyaGusev/saiga_llama3_8b"
+  },
+  "qwen3-4b-thinking-2507": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen3-4B-Thinking-2507"
+  },
+  "qwen3-4b-base": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen3-4B-Base"
+  },
+  "deepseek-coder-1.3b-instruct": {
+    "class": "huggingface",
+    "path": "deepseek-ai/deepseek-coder-1.3b-instruct"
+  },
+  "deepseek-r1-distill-qwen-14b": {
+    "class": "huggingface",
+    "path": "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B"
+  },
+  "qwen2.5-3b": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen2.5-3B"
+  },
+  "exaone-3.5-7.8b-instruct": {
+    "class": "huggingface",
+    "path": "LGAI-EXAONE/EXAONE-3.5-7.8B-Instruct"
+  },
+  "qwen2.5-coder-1.5b": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen2.5-Coder-1.5B"
+  },
+  "qwen3-reranker-8b": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen3-Reranker-8B"
+  },
+  "bfs-prover-v1-7b": {
+    "class": "huggingface",
+    "path": "ByteDance-Seed/BFS-Prover-V1-7B"
+  },
+  "qwen3-1.7b-base": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen3-1.7B-Base"
+  },
+  "starcoder2-3b": {
+    "class": "huggingface",
+    "path": "bigcode/starcoder2-3b"
+  },
+  "gemma-2-9b-it": {
+    "class": "huggingface",
+    "path": "google/gemma-2-9b-it"
+  },
+  "llama-guard-3-1b": {
+    "class": "huggingface",
+    "path": "meta-llama/Llama-Guard-3-1B"
+  },
+  "apertus-8b-instruct-2509": {
+    "class": "huggingface",
+    "path": "swiss-ai/Apertus-8B-Instruct-2509"
+  },
+  "deepseek-r1-0528-qwen3-8b-mlx-4bit": {
+    "class": "huggingface",
+    "path": "lmstudio-community/DeepSeek-R1-0528-Qwen3-8B-MLX-4bit"
+  },
+  "qwen2.5-1.5b": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen2.5-1.5B"
+  },
+  "deepseek-r1-0528-qwen3-8b-mlx-8bit": {
+    "class": "huggingface",
+    "path": "lmstudio-community/DeepSeek-R1-0528-Qwen3-8B-MLX-8bit"
+  },
+  "llama-3.2-1b-instruct-v2": {
+    "class": "huggingface",
+    "path": "unsloth/Llama-3.2-1B-Instruct"
+  },
+  "llama-2-13b-chat": {
+    "class": "huggingface",
+    "path": "meta-llama/Llama-2-13b-chat-hf"
+  },
+  "exaone-3.5-2.4b-instruct": {
+    "class": "huggingface",
+    "path": "LGAI-EXAONE/EXAONE-3.5-2.4B-Instruct"
+  },
+  "qwen3-14b-v2": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen3-14B-AWQ"
+  },
+  "qwen3-8b-base": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen3-8B-Base"
+  },
+  "nvidia-nemotron-nano-9b-v2": {
+    "class": "huggingface",
+    "path": "nvidia/NVIDIA-Nemotron-Nano-9B-v2"
+  },
+  "qwen3-4b-thinking-2507-fp8": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen3-4B-Thinking-2507-FP8"
+  },
+  "mistral-7b-v0.1": {
+    "class": "huggingface",
+    "path": "mistralai/Mistral-7B-v0.1"
+  },
+  "meta-llama-3.1-8b-instruct-v2": {
+    "class": "huggingface",
+    "path": "NousResearch/Meta-Llama-3.1-8B-Instruct"
+  },
+  "qwen3-14b-base": {
+    "class": "huggingface",
+    "path": "Qwen/Qwen3-14B-Base"
+  },
+  "gemma-2-2b": {
+    "class": "huggingface",
+    "path": "google/gemma-2-2b"
+  },
+  "gte-qwen2-7b-instruct": {
+    "class": "huggingface",
+    "path": "Alibaba-NLP/gte-Qwen2-7B-instruct"
+  },
+  "granite-3.3-2b-instruct": {
+    "class": "huggingface",
+    "path": "ibm-granite/granite-3.3-2b-instruct"
+  },
+  "gemma-1.1-2b-it": {
+    "class": "huggingface",
+    "path": "google/gemma-1.1-2b-it"
+  },
+  "gemma-2b-it": {
+    "class": "huggingface",
+    "path": "google/gemma-2b-it"
+  }
+}

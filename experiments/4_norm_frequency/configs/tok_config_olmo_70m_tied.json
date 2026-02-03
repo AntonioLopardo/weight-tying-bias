@@ -1,0 +1,4 @@
+{
+    "olmo-1b-step2000": { "class": "huggingface", "path": "allenai/OLMo-1B-hf", "revision": "step2000-tokens8B" }
+}
+

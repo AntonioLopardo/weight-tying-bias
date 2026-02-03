@@ -1,0 +1,3 @@
+{
+  "olmo-7b": { "class": "huggingface", "path": "allenai/OLMo-7B-hf", "family": "OLMo" }
+}

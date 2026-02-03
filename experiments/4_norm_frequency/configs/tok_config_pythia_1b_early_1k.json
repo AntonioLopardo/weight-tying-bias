@@ -1,0 +1,28 @@
+{
+  "pythia-1b-step0": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step0" },
+  "pythia-1b-step1000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step1000" },
+  "pythia-1b-step2000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step2000" },
+  "pythia-1b-step3000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step3000" },
+  "pythia-1b-step4000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step4000" },
+  "pythia-1b-step5000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step5000" },
+  "pythia-1b-step6000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step6000" },
+  "pythia-1b-step7000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step7000" },
+  "pythia-1b-step8000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step8000" },
+  "pythia-1b-step9000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step9000" },
+  "pythia-1b-step10000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step10000" },
+  "pythia-1b-step11000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step11000" },
+  "pythia-1b-step12000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step12000" },
+  "pythia-1b-step13000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step13000" },
+  "pythia-1b-step14000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step14000" },
+  "pythia-1b-step15000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step15000" },
+  "pythia-1b-step16000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step16000" },
+  "pythia-1b-step17000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step17000" },
+  "pythia-1b-step18000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step18000" },
+  "pythia-1b-step19000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step19000" },
+  "pythia-1b-step20000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step20000" },
+  "pythia-1b-step21000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step21000" },
+  "pythia-1b-step22000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step22000" },
+  "pythia-1b-step23000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step23000" },
+  "pythia-1b-step24000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step24000" }
+}
+
