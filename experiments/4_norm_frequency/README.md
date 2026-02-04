@@ -20,36 +20,128 @@ Plots L2 norm of each token's embedding against its log-frequency in a corpus. C
 
 | Script | Description |
 |--------|-------------|
-| `main.py` | CLI with `plot-logfreq-vs-l2` command |
-| `tokenizer_util.py` | Token frequency computation |
-| `plotting_util.py` | Visualization utilities |
+| `main.py` | CLI with `plot-figure5` and other plotting commands |
+| `tokenizer_util.py` | Token frequency computation, embedding loading |
+| `plotting_util.py` | Visualization utilities including `plot_figure5_comparison` |
 
-## Usage
+## Reproducing Figure 5
+
+### Prerequisites
+
+1. **Model checkpoints** in this directory:
+   - `OLMo-1B-tied/model.pt` - Tied OLMo-1B at ~10k steps
+   - `OLMo-1B-untied/model.pt` - Untied OLMo-1B at ~10k steps
+
+2. **Text data** for frequency computation:
+   - `text_data/eng_latn_300mb.txt` (symlinked from `/home/vec_norm/scripts/text_data/`)
+
+### Generate Figure 5
 
 ```bash
-# Plot norm vs frequency for a model
-python main.py plot-logfreq-vs-l2 --config configs/tok_config_olmo_1b_both.json
+# Activate virtual environment
+source /home/vec_norm/.venv/bin/activate
 
-# Generate Figure 5 (requires OLMo checkpoints at step 10K)
-python main.py plot-logfreq-vs-l2 \
-    --config configs/tok_config_olmo_1b_early_10k.json \
-    --output results/figures/figure5_norm_frequency.png
+# Generate Figure 5 with default settings
+python main.py plot-figure5 \
+    --config configs/tok_config_figure5_local.json \
+    --output results/figures/figure5_norm_frequency.png \
+    --steps "10k steps" \
+    --ymin 0.7 \
+    --ymax 2.0
+
+# Output: results/figures/figure5_norm_frequency.png
 ```
 
-## Configuration
+### Configuration
 
-Example config for OLMo-1B at step 10K:
+The config file `configs/tok_config_figure5_local.json` specifies local model paths:
 
 ```json
 {
-    "olmo_1b_0724_step10k": {
-        "class": "huggingface",
-        "model": "allenai/OLMo-1B-0724-hf",
-        "revision": "step10000-tokens40B"
-    },
-    "olmo_1b_tied": {
-        "class": "huggingface", 
-        "model": "allenai/OLMo-1B-hf"
-    }
+  "OLMo-1B-tied-10k": {
+    "class": "olmo_local",
+    "path": "/home/vec_norm/weight-tying-bias/experiments/4_norm_frequency/OLMo-1B-tied",
+    "tokenizer": "EleutherAI/gpt-neox-20b",
+    "family": "OLMo-1B-tied"
+  },
+  "OLMo-1B-untied-10k": {
+    "class": "olmo_local",
+    "path": "/home/vec_norm/weight-tying-bias/experiments/4_norm_frequency/OLMo-1B-untied",
+    "tokenizer": "EleutherAI/gpt-neox-20b",
+    "family": "OLMo-1B-untied"
+  }
 }
 ```
+
+### Command Options
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `--config` | Required | Path to model config JSON |
+| `--output` | `FIG_DIR/figure5_norm_frequency.png` | Output path for the figure |
+| `--steps` | `"10k steps"` | Training steps label for titles |
+| `--ymin` | `0.8` | Lower y-axis limit (L2 norm) |
+| `--ymax` | `2.0` | Upper y-axis limit (L2 norm) |
+| `--xmin` | `0.0` | Lower x-axis limit (log10 freq) |
+| `--xmax` | `7.0` | Upper x-axis limit (log10 freq) |
+
+---
+
+## Model Training Reproduction
+
+The models used for Figure 5 were trained using the [OLMo](https://github.com/allenai/OLMo) framework with matching configurations (except `weight_tying`).
+
+### Training Configuration
+
+| Setting | Value |
+|---------|-------|
+| Architecture | OLMo-1B (1.17B parameters) |
+| Layers | 16 |
+| Hidden Size | 2048 |
+| Attention Heads | 16 |
+| Activation | SwiGLU |
+| Position Encoding | RoPE |
+| Sequence Length | 4096 |
+| Vocab Size | 50,280 |
+| Data | Dolma v1.7 (30B tokens subset) |
+| Batch Size | 512 |
+| Learning Rate | 3e-4 |
+| Warmup Steps | 2500 |
+| Scheduler | Cosine with warmup |
+| Max Steps | 10,000 |
+
+### Setup
+
+```bash
+# Clone OLMo repository
+git clone https://github.com/allenai/OLMo.git
+cd OLMo
+
+pip install -e '.[all]'
+
+# Prepare training data (30B tokens from Dolma v1.7)
+# Data should be at: 4_norm_frequency/text_data/dolma_v1_7/dolma_v1_7_30B.npy
+```
+
+### Training Configs
+
+The training configs used are stored alongside the model checkpoints:
+
+- **Tied model**: `OLMo-1B-tied/config.yaml` (sets `weight_tying: true`)
+- **Untied model**: `OLMo-1B-untied/config.yaml` (sets `weight_tying: false`)
+
+### Train Models
+
+```bash
+cd /home/vec_norm/OLMo
+
+# Train tied model
+torchrun --nproc_per_node=8 scripts/train.py \
+    /home/vec_norm/weight-tying-bias/experiments/4_norm_frequency/OLMo-1B-tied/config.yaml
+
+# Train untied model  
+torchrun --nproc_per_node=8 scripts/train.py \
+    /home/vec_norm/weight-tying-bias/experiments/4_norm_frequency/OLMo-1B-untied/config.yaml
+```
+
+Checkpoints will be saved to `/home/vec_norm/OLMo/checkpoints/` as specified in each config's `save_folder`.

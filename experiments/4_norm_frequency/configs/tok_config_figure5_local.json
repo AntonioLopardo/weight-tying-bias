@@ -1,0 +1,14 @@
+{
+  "OLMo-1B-tied-10k": {
+    "class": "olmo_local",
+    "path": "/home/vec_norm/weight-tying-bias/experiments/4_norm_frequency/OLMo-1B-tied",
+    "tokenizer": "EleutherAI/gpt-neox-20b",
+    "family": "OLMo-1B-tied"
+  },
+  "OLMo-1B-untied-10k": {
+    "class": "olmo_local",
+    "path": "/home/vec_norm/weight-tying-bias/experiments/4_norm_frequency/OLMo-1B-untied",
+    "tokenizer": "EleutherAI/gpt-neox-20b",
+    "family": "OLMo-1B-untied"
+  }
+}

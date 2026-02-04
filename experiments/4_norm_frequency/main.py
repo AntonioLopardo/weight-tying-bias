@@ -52,6 +52,7 @@ from plotting_util import (
     plot_next_token_prob_vs_freq_for_model,
     plot_rankrank_probs_for_model,
     plot_rankrank_slopes_vs_center_for_model,
+    plot_figure5_comparison,
 )
 
 
@@ -958,6 +959,89 @@ def cmd_plot_combined_all_centered(args):
                 )
         except Exception as e:
             print(f"Skipping {name}: {e}")
+
+
+def cmd_plot_figure5(args):
+    """Generate Figure 5: 1x3 comparison of untied input, untied output, and tied embeddings.
+    
+    Requires a config with exactly two models: one tied and one untied.
+    The config should have keys containing 'tied' and 'untied' to identify them.
+    """
+    _ensure_dir(FIG_DIR)
+    config_path = args.config or CONFIG_PATH
+    cfg = load_model_config(config_path)
+    
+    # Find tied and untied models
+    tied_spec = None
+    untied_spec = None
+    tied_name = None
+    untied_name = None
+    
+    for name, spec in cfg.items():
+        if spec.get("class") not in ("huggingface", "olmo", "olmo_native", "olmo_local"):
+            continue
+        name_lower = name.lower()
+        if 'tied' in name_lower and 'untied' not in name_lower:
+            tied_name = name
+            tied_spec = spec
+        elif 'untied' in name_lower:
+            untied_name = name
+            untied_spec = spec
+    
+    if tied_spec is None or untied_spec is None:
+        raise ValueError("Config must contain both a 'tied' and 'untied' model (by name)")
+    
+    tied_model_id = _get_model_id(tied_name, tied_spec)
+    untied_model_id = _get_model_id(untied_name, untied_spec)
+    
+    print(f"[Figure 5] Tied model: {tied_name} -> {tied_model_id}")
+    print(f"[Figure 5] Untied model: {untied_name} -> {untied_model_id}")
+    
+    # Load embeddings
+    print("[Figure 5] Loading untied input embeddings...")
+    untied_input_emb, _ = _load_embeddings_for_spec(untied_spec, untied_model_id)
+    print("[Figure 5] Loading untied output embeddings...")
+    untied_output_emb, _ = _load_output_embeddings_for_spec(untied_spec, untied_model_id)
+    print("[Figure 5] Loading tied embeddings...")
+    tied_emb, _ = _load_embeddings_for_spec(tied_spec, tied_model_id)
+    
+    # Compute norms
+    untied_input_norms = compute_l2_norms(untied_input_emb.detach().cpu().float())
+    untied_output_norms = compute_l2_norms(untied_output_emb.detach().cpu().float())
+    tied_norms = compute_l2_norms(tied_emb.detach().cpu().float())
+    
+    # Build frequencies (use untied model's tokenizer)
+    tokenizer_id = _get_tokenizer_from_spec(untied_spec)
+    print("[Figure 5] Building token frequencies...")
+    freq_counts = _build_freqs_for_model_id_by_type(
+        untied_model_id,
+        data_path=DATA_PATH,
+        use_cache=True,
+        cache_dir=TOKEN_CACHE_DIR,
+        freq_type=args.freq_type,
+        revision=_get_revision_from_spec(untied_spec),
+        tokenizer_id=tokenizer_id,
+    )
+    
+    # Generate output path
+    out_path = args.output or os.path.join(FIG_DIR, "figure5_norm_frequency.png")
+    
+    # Plot
+    plot_figure5_comparison(
+        untied_input_norms=untied_input_norms,
+        untied_output_norms=untied_output_norms,
+        tied_norms=tied_norms,
+        freq_counts=freq_counts,
+        out_path=out_path,
+        untied_name=untied_name.replace("-9k", "").replace("-10k", ""),
+        tied_name=tied_name.replace("-9k", "").replace("-10k", ""),
+        steps=args.steps or "9k steps",
+        ymin=args.ymin if args.ymin is not None else 0.8,
+        ymax=args.ymax if args.ymax is not None else 2.0,
+        xmin=args.xmin if args.xmin is not None else 0.0,
+        xmax=args.xmax if args.xmax is not None else 7.0,
+    )
+    print(f"[Figure 5] Saved to: {out_path}")
 
 
 def cmd_plot_next_probs(args):
@@ -1912,6 +1996,7 @@ def main():
         "plot-combined-one",
         "plot-combined-all",
         "plot-combined-all-centered",
+        "plot-figure5",
         "plot-next-probs",
         "plot-next-probs-freq",
         "plot-next-probs-freq-all",
@@ -1935,6 +2020,10 @@ def main():
     parser.add_argument("--include-root", action="store_true", help="Include 1/8-root columns (for plot-combined-one)")
     parser.add_argument("--ymin", type=float, default=None, help="Fixed lower y-axis limit for combined scatter plots")
     parser.add_argument("--ymax", type=float, default=None, help="Fixed upper y-axis limit for combined scatter plots")
+    parser.add_argument("--xmin", type=float, default=None, help="Fixed lower x-axis limit (for plot-figure5)")
+    parser.add_argument("--xmax", type=float, default=None, help="Fixed upper x-axis limit (for plot-figure5)")
+    parser.add_argument("--output", default=None, help="Output path for figure (for plot-figure5)")
+    parser.add_argument("--steps", default=None, help="Training steps label (for plot-figure5, e.g. '10k steps')")
     parser.add_argument("--no-cache", action="store_true", help="Disable tokenization cache")
     parser.add_argument("--topk", default=100, help="Top-K most frequent tokens to compare (for report-topfreq)")
     parser.add_argument("--freq-type", default="unigram", choices=["unigram", "bigram"], help="Frequency definition: unigram counts or distinct bigram neighbors")
@@ -1994,6 +2083,8 @@ def main():
         cmd_plot_combined_all(args)
     elif args.command == "plot-combined-all-centered":
         cmd_plot_combined_all_centered(args)
+    elif args.command == "plot-figure5":
+        cmd_plot_figure5(args)
     elif args.command == "plot-next-probs":
         cmd_plot_next_probs(args)
     elif args.command == "plot-next-probs-freq":

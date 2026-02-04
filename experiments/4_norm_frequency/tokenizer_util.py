@@ -448,12 +448,19 @@ def load_output_embeddings_from_olmo_local(checkpoint_path: str, use_cache: bool
             break
     
     if emb is None:
-        for key in inner_state.keys():
-            if 'ff_out' in key.lower() or 'lm_head' in key.lower():
-                if isinstance(inner_state[key], torch.Tensor) and inner_state[key].ndim == 2:
-                    emb = inner_state[key]
-                    print(f"[load_output_embeddings_from_olmo_local] Using fallback key '{key}'")
-                    break
+        # Check for weight tying: if no separate output embedding, use input embedding
+        # Weight tying means the model uses transformer.wte.weight for both input and output
+        input_emb_keys = ["model.transformer.wte.weight", "transformer.wte.weight", "wte.weight"]
+        for key in input_emb_keys:
+            if key in inner_state:
+                candidate = inner_state[key]
+                if isinstance(candidate, torch.Tensor) and candidate.ndim == 2:
+                    # Check shape: output embedding should be [vocab_size, hidden_dim]
+                    # FFN weights are [hidden_dim, ffn_dim] which is different
+                    if candidate.shape[0] > candidate.shape[1]:  # vocab > hidden (typical)
+                        emb = candidate
+                        print(f"[load_output_embeddings_from_olmo_local] Weight tying detected, using input embedding '{key}'")
+                        break
     
     if emb is None or emb.ndim != 2:
         available_keys = [k for k in inner_state.keys() if isinstance(inner_state.get(k), torch.Tensor)]
