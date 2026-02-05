@@ -19,6 +19,7 @@ With 5× input gradient scaling at step 10K:
 | Script | Description |
 |--------|-------------|
 | `reproduce_table2.py` | Reproduces Table 2 from local checkpoints + official HF reference |
+| [`Appendix_E/reproduce_table6.py`](Appendix_E/) | Reproduces Table 6 (step 1K, scaling factors x2 and x10) |
 
 ## Reproducing Table 2
 

@@ -20,6 +20,7 @@ Tracks how input and output embedding matrices evolve during training in untied 
 | Script | Description |
 |--------|-------------|
 | `track_evolution.py` | Loads HuggingFace checkpoints, computes cosine similarity metrics, saves JSON results and generates plots |
+| [`Appendix_D/`](Appendix_D/) | Appendix D reproduction details for Figures 8–9 (OLMo-7B, Pythia-1B) |
 
 ## Reproducing Figures 3, 8, 9
 

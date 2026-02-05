@@ -24,7 +24,8 @@ Compares tied embedding matrices to untied input/output matrices using:
 | `compare_cross_model.py` | OLMo tied vs untied | Table 1, Figure 1 |
 | `compare_pythia_gptneo.py` | Pythia-2.8B vs GPT-Neo-2.7B | Table 1 |
 | `compare_qwen.py` | Qwen3-4B vs Qwen3-8B | (different dims, see KNN) |
-| `nn_k1.py` | KNN@10 overlap analysis | Table 5 |
+| `nn_k1.py` | KNN@1 overlap (Qwen only) | Exploratory |
+| [`Appendix_B/reproduce_table5.py`](Appendix_B/) | KNN@10 overlap (all 3 families) | Table 5 |
 
 ## Usage
 

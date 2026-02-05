@@ -21,6 +21,8 @@ Uses the tuned lens (Belrose et al., 2023) to measure how well each layer's repr
 | `compare_olmo_tuned_lenses.py` | OLMo-1B tied vs untied | Figure 2 |
 | `compare_pythia_vs_gptneo.py` | Pythia-2.8B vs GPT-Neo-2.7B | Figure 6 |
 | `compare_qwen3_tuned_lenses.py` | Qwen3 family comparison | Figure 7 |
+| [`Appendix_C/reproduce_figure6.py`](Appendix_C/) | Standalone Figure 6 reproduction | Figure 6 |
+| [`Appendix_C/reproduce_figure7.py`](Appendix_C/) | Standalone Figure 7 reproduction | Figure 7 |
 | `reproduce_figure3.py` | Reproduce Fig 3 from Belrose et al. | — |
 | `compare_olmo70m_tied_untied.py` | OLMo-70M tied vs untied | — |
 | `compare_pythia_tuned_lenses.py` | Pythia model family comparison | — |
