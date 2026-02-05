@@ -33,7 +33,10 @@ Plots L2 norm of each token's embedding against its log-frequency in a corpus. C
    - `OLMo-1B-untied/model.pt` - Untied OLMo-1B at ~10k steps
 
 2. **Text data** for frequency computation:
-   - `text_data/eng_latn_300mb.txt` (symlinked from `/home/vec_norm/scripts/text_data/`)
+   - `../text_data/eng_latn_300mb.txt`
+
+3. **Training data** (shared across experiments):
+   - `../text_data/dolma_v1_7/dolma_v1_7_30B.npy` — see `../text_data/README.md`
 
 ### Generate Figure 5
 
@@ -119,8 +122,9 @@ cd OLMo
 
 pip install -e '.[all]'
 
-# Prepare training data (30B tokens from Dolma v1.7)
-# Data should be at: 4_norm_frequency/text_data/dolma_v1_7/dolma_v1_7_30B.npy
+# Training data (shared across experiments)
+# Data should be at: experiments/text_data/dolma_v1_7/dolma_v1_7_30B.npy
+# See experiments/text_data/README.md for details
 ```
 
 ### Training Configs

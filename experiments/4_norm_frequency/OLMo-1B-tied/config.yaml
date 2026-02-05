@@ -71,7 +71,7 @@ scheduler:
   warmup_min_lr: null
 data:
   paths:
-  - ../4_norm_frequency/text_data/dolma_v1_7/dolma_v1_7_30B.npy
+  - ../text_data/dolma_v1_7/dolma_v1_7_30B.npy
   memmap_dtype: uint16
   datasets: null
   label_mask_paths: null
@@ -125,7 +125,7 @@ max_grad_norm_ratio: null
 precision: amp_bf16
 wandb:
   project: VecNorm
-  entity: antoniolopardo
+  entity: null
   group: null
   name: null
   tags:
