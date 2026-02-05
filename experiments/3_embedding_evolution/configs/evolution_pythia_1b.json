@@ -1,15 +1,5 @@
 {
   "pythia-1b-step0": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step0" },
-  "pythia-1b-step1": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step1" },
-  "pythia-1b-step2": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step2" },
-  "pythia-1b-step4": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step4" },
-  "pythia-1b-step8": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step8" },
-  "pythia-1b-step16": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step16" },
-  "pythia-1b-step32": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step32" },
-  "pythia-1b-step64": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step64" },
-  "pythia-1b-step128": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step128" },
-  "pythia-1b-step256": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step256" },
-  "pythia-1b-step512": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step512" },
   "pythia-1b-step1000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step1000" },
   "pythia-1b-step2000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step2000" },
   "pythia-1b-step3000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step3000" },
@@ -23,6 +13,6 @@
   "pythia-1b-step11000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step11000" },
   "pythia-1b-step12000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step12000" },
   "pythia-1b-step13000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step13000" },
-  "pythia-1b-step14000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step14000" }
+  "pythia-1b-step14000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step14000" },
+  "pythia-1b-step15000": { "class": "huggingface", "path": "EleutherAI/pythia-1b", "revision": "step15000" }
 }
-
