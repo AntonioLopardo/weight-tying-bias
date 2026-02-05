@@ -1,9 +1,0 @@
-{
-  "OLMo-1B-0724-tied-9000": {
-    "class": "olmo_local",
-    "path": "/home/vec_norm/OLMo/checkpoints/OLMo-1B-tied/step9000-unsharded",
-    "tokenizer": "EleutherAI/gpt-neox-20b",
-    "family": "OLMo-1B"
-  }
-}
-

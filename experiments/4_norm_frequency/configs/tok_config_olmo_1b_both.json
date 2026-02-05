@@ -1,4 +1,0 @@
-{
-  "olmo-1b-0724-hf": { "class": "huggingface", "path": "allenai/OLMo-1B-0724-hf", "family": "OLMo" },
-  "olmo-1b-hf": {"class":"huggingface", "path": "allenai/OLMo-1B-hf", "family": "OLMo"}
-}

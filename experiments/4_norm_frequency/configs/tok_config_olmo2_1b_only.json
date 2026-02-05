@@ -1,3 +1,0 @@
-{
-  "olmo2-1b-0425": { "class": "huggingface", "path": "allenai/OLMo-2-0425-1B", "family": "OLMo-2" }
-}

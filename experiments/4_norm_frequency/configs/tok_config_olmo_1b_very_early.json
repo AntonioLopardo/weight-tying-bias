@@ -1,9 +1,0 @@
-{
-  "olmo-1b-0724-step0": { "class": "huggingface", "path": "allenai/OLMo-1B-0724-hf", "revision": "step0-tokens0B" },
-
-  "olmo-1b-0724-step1454000": {
-    "class": "huggingface",
-    "path": "allenai/OLMo-1B-0724-hf",
-    "revision": "step1454000-tokens3048B"
-  }
-}
