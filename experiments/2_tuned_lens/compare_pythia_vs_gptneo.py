@@ -9,7 +9,10 @@ import numpy as np
 from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from tuned_lens.nn.lenses import TunedLens, LogitLens
+from pathlib import Path
 
+SCRIPT_DIR = Path(__file__).resolve().parent
+TRAINED_LENSES_DIR = SCRIPT_DIR / "trained_lenses"
 
 # Models to compare
 # Using locally trained lenses
@@ -17,12 +20,12 @@ MODELS = [
     {
         "name": "EleutherAI/pythia-2.8b",
         "label": "Pythia-2.8B",
-        "lens_path": "/home/vec_norm/tuned-lens/trained_lenses/EleutherAI/pythia-2.8b",
+        "lens_path": str(TRAINED_LENSES_DIR / "EleutherAI" / "pythia-2.8b"),
     },
     {
         "name": "EleutherAI/gpt-neo-2.7B",
         "label": "GPT-Neo-2.7B",
-        "lens_path": "/home/vec_norm/tuned-lens/trained_lenses/EleutherAI/gpt-neo-2.7B",
+        "lens_path": str(TRAINED_LENSES_DIR / "EleutherAI" / "gpt-neo-2.7B"),
     },
 ]
 

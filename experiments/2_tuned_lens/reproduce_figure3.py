@@ -12,6 +12,10 @@ import numpy as np
 from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from tuned_lens.nn.lenses import TunedLens, LogitLens
+from pathlib import Path
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+TRAINED_LENSES_DIR = SCRIPT_DIR / "trained_lenses"
 
 
 def compute_kl_divergence(log_p: torch.Tensor, log_q: torch.Tensor, dim: int = -1) -> torch.Tensor:
@@ -183,9 +187,8 @@ def main():
     # Load lenses
     print("Loading tuned lens...")
     # Check for local trained lens first
-    local_lens_path = f"/home/vec_norm/tuned-lens/trained_lenses/{model_name}"
+    local_lens_path = str(TRAINED_LENSES_DIR / model_name)
     try:
-        from pathlib import Path
         if Path(local_lens_path).exists():
             print(f"Loading local trained lens from {local_lens_path}")
             tuned_lens = TunedLens.from_model_and_pretrained(

@@ -10,6 +10,9 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from tuned_lens.nn.lenses import TunedLens, LogitLens
 from pathlib import Path
 
+SCRIPT_DIR = Path(__file__).resolve().parent
+TRAINED_LENSES_DIR = SCRIPT_DIR / "trained_lenses"
+
 
 def compute_kl_divergence(log_p: torch.Tensor, log_q: torch.Tensor, dim: int = -1) -> torch.Tensor:
     """Compute KL(P || Q) where log_p and log_q are log probabilities."""
@@ -92,7 +95,7 @@ def main():
         )
         
         # Load tuned lens
-        local_lens_path = f"/home/vec_norm/tuned-lens/trained_lenses/{model_name}"
+        local_lens_path = str(TRAINED_LENSES_DIR / model_name)
         tuned_lens = TunedLens.from_model_and_pretrained(
             model, 
             lens_resource_id=local_lens_path,

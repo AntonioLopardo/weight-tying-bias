@@ -17,6 +17,9 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from tuned_lens.nn.lenses import TunedLens, LogitLens
 from pathlib import Path
 
+SCRIPT_DIR = Path(__file__).resolve().parent
+TRAINED_LENSES_DIR = SCRIPT_DIR / "trained_lenses"
+
 
 # Qwen3 model configurations with tied embedding info
 QWEN3_MODELS = [
@@ -180,7 +183,7 @@ def main():
         print(f"Tied embeddings: {actual_tied} (expected: {expected_tied})")
         
         # Load tuned lens
-        local_lens_path = f"/home/vec_norm/tuned-lens/trained_lenses/{model_name}"
+        local_lens_path = str(TRAINED_LENSES_DIR / model_name)
         
         if not Path(local_lens_path).exists():
             print(f"WARNING: Tuned lens not found at {local_lens_path}")
