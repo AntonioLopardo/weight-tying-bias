@@ -21,66 +21,105 @@ Measures gradient contributions from input vs output layers to the shared embedd
 | `verify_gradient_provenance.py` | Verifies gradient tracking doesn't affect training |
 | `gradient_provenance_tracking.md` | Documentation for OLMo integration |
 
-## Pre-generated Figures
+## Reproducing Figure 4
 
-Available in `results/figures/`:
-- `figure4_gradient_provenance_100steps.png` - First 100 training steps
-- `figure4_gradient_provenance_1000steps.png` - First 1000 training steps
+### Prerequisites
 
-## Usage
+1. **Gradient provenance CSV** in this directory:
+   - `OLMo-1B-tied-grad-provenance/gradient_provenance.csv` - Per-step gradient norms from 1000 steps of training
+   - `OLMo-1B-tied-grad-provenance/config.yaml` - Training config used to produce the CSV
+   - `OLMo-1B-tied-grad-provenance/model.pt` - Model weights at step 1000
 
-### Plotting from Existing Data
+2. **Training data** (shared across experiments):
+   - `../text_data/dolma_v1_7/dolma_v1_7_30B.npy` — see `../text_data/README.md`
+
+### Generate Figure 4
 
 ```bash
-python plot_gradient_provenance.py path/to/gradient_provenance.csv
+# Activate virtual environment
+source /home/vec_norm/.venv/bin/activate
+
+# Generate Figure 4 from existing CSV data
+python plot_gradient_provenance.py \
+    OLMo-1B-tied-grad-provenance/gradient_provenance.csv \
+    --output results/figures/figure4_gradient_provenance.png
+
+# Output: results/figures/figure4_gradient_provenance.png
 ```
 
-### Generating New Data
+The script applies a rolling average (window=20) for smoothing and produces a two-panel figure:
+- **Left panel**: Raw + smoothed L2 norms on log scale
+- **Right panel**: Percentage stacked area chart (input vs output contribution)
 
-Requires training OLMo with gradient provenance tracking enabled:
+### Command Options
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `csv_path` | Required | Path to `gradient_provenance.csv` |
+| `--output` | Same directory as CSV | Output path for the figure |
+
+---
+
+## Model Training Reproduction
+
+The model used for Figure 4 was trained using a custom fork of [OLMo](https://github.com/allenai/OLMo) with gradient provenance tracking hooks added to `olmo/model.py` and `olmo/train.py`.
+
+### Training Configuration
+
+| Setting | Value |
+|---------|-------|
+| Architecture | OLMo-1B (1.17B parameters) |
+| Layers | 16 |
+| Hidden Size | 2048 |
+| Attention Heads | 16 |
+| Activation | SwiGLU |
+| Position Encoding | RoPE |
+| Sequence Length | 4096 |
+| Vocab Size | 50,280 |
+| Weight Tying | **true** |
+| Gradient Tracking | `track_embedding_gradient_provenance: true` |
+| Data | Dolma v1.7 (30B tokens subset) |
+| Batch Size | 8 (microbatch=2, grad_accum=4) |
+| Learning Rate | 3e-4 |
+| Warmup Steps | 100 |
+| Scheduler | Cosine with warmup |
+| Max Steps | 1,000 |
+
+### Setup
+
+```bash
+# Clone custom OLMo fork with gradient provenance hooks
+cd /home/vec_norm/OLMo
+
+pip install -e '.[all]'
+
+# Training data (shared across experiments)
+# Data should be at: experiments/text_data/dolma_v1_7/dolma_v1_7_30B.npy
+# See experiments/text_data/README.md for details
+```
+
+### Training Config
+
+The training config used is stored alongside the data:
+
+- **Tied model with tracking**: `OLMo-1B-tied-grad-provenance/config.yaml` (sets `weight_tying: true`, `track_embedding_gradient_provenance: true`)
+
+The critical config settings are:
 
 ```yaml
-# In OLMo config YAML
 model:
   weight_tying: true
   track_embedding_gradient_provenance: true
+  # Do NOT enable clip_output_proj_to_embedding_grad_norm for Figure 4
 ```
 
-Then run training:
+### Train Model
 
 ```bash
-cd /path/to/OLMo
-torchrun --nproc_per_node=1 scripts/train.py configs/custom/OLMo-1B-grad-provenance.yaml
+cd /home/vec_norm/OLMo
+
+torchrun --nproc_per_node=1 scripts/train.py \
+    weight-tying-bias/experiments/5_gradient_flow/OLMo-1B-tied-grad-provenance/config.yaml
 ```
 
-The training logs gradient metrics to CSV which can be plotted with `plot_gradient_provenance.py`.
-
-## Implementation Details
-
-From `gradient_provenance_tracking.md`:
-
-1. **Embedding gradients**: A `register_full_backward_hook` on `transformer.wte` captures gradients from embedding lookup
-2. **Output projection gradients**: Hook on logits tensor computes gradient w.r.t. `wte.weight` as `grad_output.T @ cached_input`
-
-### Mathematical Guarantee
-
-When only tracking (not clipping), the implementation only **observes** gradients without modifying them:
-- Losses are identical with/without tracking
-- Gradients are identical with/without tracking
-- Final weights after optimization are identical
-
-## Available Checkpoints
-
-Checkpoints with gradient provenance data:
-- `OLMo/checkpoints/OLMo-1B-grad-provenance_100/` (100 steps)
-- `OLMo/checkpoints/OLMo-1B-grad-provenance-1000/` (1000 steps)
-
-## Expected Results (Figure 4)
-
-Left panel (log scale):
-- Output gradient norms: ~10x higher than input throughout
-- Gap narrows slightly over 1000 steps
-
-Right panel (percentage):
-- Step 0: Output ~85%, Input ~15%
-- Step 1000: Output ~75%, Input ~25%
+Checkpoints and `gradient_provenance.csv` will be saved to the `save_folder` specified in the config at every training step.
