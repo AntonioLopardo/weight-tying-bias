@@ -1,0 +1,122 @@
+run_name: OLMo-1B-0724-continue
+seed: 6198
+dry_run: false
+
+wandb: null  # Disable wandb for local training
+
+model:
+  d_model: 2048
+  n_heads: 16
+  n_layers: 16
+  mlp_ratio: 8  # intermediate_size = 8192 after SwiGLU gating
+  weight_tying: false  # tie_word_embeddings: false
+  alibi: false
+  rope: true
+  rope_theta: 10000
+  flash_attention: true
+  attention_dropout: 0.0
+  attention_layer_norm: false
+  clip_qkv: 8.0  # Key difference from original config
+  multi_query_attention: false
+  include_bias: false
+  block_type: sequential
+  layer_norm_type: default
+  layer_norm_with_affine: false
+  bias_for_layer_norm: false
+  attention_layer_norm_with_affine: false
+  activation_type: swiglu
+  residual_dropout: 0.0
+  embedding_dropout: 0.0
+  max_sequence_length: 4096
+  vocab_size: 50280
+  embedding_size: 50304
+  eos_token_id: 50279
+  pad_token_id: 1
+  init_device: cuda
+  init_fn: mitchell
+  init_std: 0.02
+
+compile: null
+
+optimizer:
+  name: adamw
+  learning_rate: 3.0e-4  # Peak LR
+  weight_decay: 0.1
+  betas:
+  - 0.9
+  - 0.95
+  eps: 1.0e-5
+  metrics_log_interval: 10
+  decay_norm_and_bias: true
+  decay_embeddings: true
+
+scheduler:
+  name: cosine_with_warmup
+  # Checkpoint was at step 2000/2500 warmup, so only 500 warmup steps remaining
+  # Since step counter resets to 0, we set t_warmup: 500
+  t_warmup: 500
+  alpha_f: 0.1    # Decay to 3e-5 (3e-5 / 3e-4 = 0.1)
+
+tokenizer:
+  identifier: tokenizers/allenai_eleuther-ai-gpt-neox-20b-pii-special.json
+  truncate_direction: right
+
+save_folder: /home/vec_norm/OLMo/checkpoints/OLMo-1B-0724-continue
+remote_save_folder: null
+save_overwrite: true
+
+# Checkpoint settings
+save_interval: 1000
+save_interval_unsharded: 500
+save_num_checkpoints_to_keep: 3
+save_num_unsharded_checkpoints_to_keep: 5
+
+# Load from the existing checkpoint
+load_path: /home/vec_norm/OLMo/checkpoints/OLMo-1B-0724-reproduce/step2000-unsharded
+
+# CRITICAL: Keep optimizer and trainer state to continue warmup schedule
+reset_optimizer_state: false
+reset_trainer_state: false
+
+# Start fresh with new dataset (restore_dataloader: false resets step counter)
+# Optimizer state is still preserved from checkpoint
+restore_dataloader: false
+
+# Training duration
+# With batch_size 512 and seq_len 4096: 1000 steps ≈ 2.1B tokens
+# 30B tokens ≈ 14,300 steps for full dolma_v1_7_30B dataset
+max_duration: 15000
+global_train_batch_size: 512  # 1000 steps ≈ 2.1B tokens (512 * 4096 * 1000)
+device_train_microbatch_size: 8  # For B200 with 183GB memory
+
+precision: amp_bf16
+distributed_strategy: ddp
+
+ddp:
+  grad_sync_mode: batch
+  find_unused_params: false
+
+gen1_gc_interval: 1
+
+max_grad_norm: 1.0
+max_grad_norm_ratio: null
+
+speed_monitor:
+  window_size: 20
+
+eval_interval: 500
+eval_subset_num_batches: -1
+device_eval_batch_size: ${device_train_microbatch_size}
+evaluators: []  # Disable evaluators for local training
+
+data:
+  pad_direction: right
+  num_workers: 16
+  drop_last: true
+  pin_memory: true
+  prefetch_factor: 2
+  persistent_workers: true
+  timeout: 0
+  paths:
+    - /home/vec_norm/OLMo/data/dolma_v1_7/dolma_v1_7_30B.npy
+
