@@ -20,8 +20,11 @@ from pathlib import Path
 from typing import Optional
 
 import matplotlib.pyplot as plt
+import numpy as np
 import torch
 from tqdm import tqdm
+
+SCRIPT_DIR = Path(__file__).resolve().parent
 
 
 def load_config(config_path: str) -> dict:
@@ -100,18 +103,7 @@ def extract_step_from_name(name: str) -> int:
 
 
 def track_embedding_evolution(config: dict, output_dir: Path) -> dict:
-    """Track embedding evolution across checkpoints from config.
-    
-    Config format:
-    {
-        "checkpoint-name": {
-            "class": "huggingface",
-            "path": "org/model-name",
-            "revision": "stepN-tokensXB"
-        },
-        ...
-    }
-    """
+    """Track embedding evolution across checkpoints from config."""
     # Sort checkpoints by step number
     checkpoints = []
     for name, spec in config.items():
@@ -209,35 +201,93 @@ def track_embedding_evolution(config: dict, output_dir: Path) -> dict:
     return results, model_name
 
 
+def get_display_name(model_name: str) -> str:
+    """Get a clean display name for the model."""
+    if "OLMo-1B-0724" in model_name:
+        return "OLMo-1B-0724"
+    elif "OLMo-7B" in model_name:
+        return "OLMo-7B-0424"
+    elif "pythia-1b" in model_name.lower() or "Pythia" in model_name:
+        return "Pythia-1B"
+    return model_name
+
+
 def plot_evolution(results: dict, output_dir: Path, model_name: str):
-    """Plot embedding evolution (reproduces Figures 3, 8, 9)."""
+    """Plot embedding evolution matching the paper style (Figures 3, 8, 9).
+    
+    Top panel: line plot of cosine similarity to initial embeddings.
+    Bottom panel: bar chart + dashed line overlay of consecutive cosine similarity.
+    """
     steps = results["steps"]
-    
-    fig, axes = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
-    
-    # Top panel: Cumulative drift from initialization
+    display_name = get_display_name(model_name)
+
+    # Exclude step 0 from the plot (it's the reference point)
+    plot_steps = steps[1:]
+    input_vs_init = results["input_vs_init"][1:]
+    output_vs_init = results["output_vs_init"][1:]
+    input_consec = results["input_consecutive"][1:]
+    output_consec = results["output_consecutive"][1:]
+
+    # Colors matching the paper (IBM palette)
+    color_input = '#648FFF'
+    color_output = '#FFB000'
+
+    fig, axes = plt.subplots(2, 1, figsize=(10, 10), sharex=True)
+    fig.subplots_adjust(hspace=0.08)
+
+    # --- Top panel: Cumulative drift from initialization ---
     ax1 = axes[0]
-    ax1.plot(steps, results["input_vs_init"], 'b-o', label='Input Embedding', markersize=4)
-    ax1.plot(steps, results["output_vs_init"], 'r-o', label='Output Embedding', markersize=4)
-    ax1.set_ylabel('Cosine Similarity to Initial')
-    ax1.set_title(f'{model_name} (untied): Cumulative Drift from Initialization')
-    ax1.legend()
+    ax1.plot(plot_steps, input_vs_init, '-o', color=color_input, markersize=6,
+             linewidth=2, label=f'{display_name} Input Embedding')
+    ax1.plot(plot_steps, output_vs_init, '-s', color=color_output, markersize=6,
+             linewidth=2, label=f'{display_name} Output Projection')
+    ax1.set_ylabel('Cos. Sim. - Step 0', fontsize=18)
+    ax1.legend(fontsize=14, loc='lower left')
     ax1.grid(True, alpha=0.3)
-    ax1.set_ylim(0, 1.05)
-    
-    # Bottom panel: Per-step change rate
+    ax1.tick_params(axis='both', labelsize=14)
+
+    # --- Bottom panel: Bar chart + dashed line for consecutive similarity ---
     ax2 = axes[1]
-    ax2.plot(steps, results["input_consecutive"], 'b-o', label='Input Embedding', markersize=4)
-    ax2.plot(steps, results["output_consecutive"], 'r-o', label='Output Embedding', markersize=4)
-    ax2.set_xlabel('Training Step')
-    ax2.set_ylabel('Cosine Similarity (Consecutive)')
-    ax2.set_title(f'{model_name} (untied): Per-Checkpoint Change Rate')
-    ax2.legend()
+
+    # Set y-axis limits to zoom into the relevant range
+    all_consec = input_consec + output_consec
+    y_min = min(all_consec) - 0.01
+    # Round down to nearest 0.01
+    y_min = max(0, int(y_min * 100) / 100)
+    ax2.set_ylim(y_min, 1.0)
+
+    # Compute bar width based on step interval
+    step_interval = plot_steps[1] - plot_steps[0] if len(plot_steps) > 1 else 1000
+    bar_width = step_interval * 0.35
+
+    # Bars hang from the top (y=1.0) down to the value
+    y_top = 1.0
+    ax2.bar(
+        [s - bar_width / 2 for s in plot_steps],
+        [y_top - v for v in input_consec],
+        bottom=input_consec,
+        width=bar_width, color=color_input, alpha=0.5, edgecolor=color_input
+    )
+    ax2.bar(
+        [s + bar_width / 2 for s in plot_steps],
+        [y_top - v for v in output_consec],
+        bottom=output_consec,
+        width=bar_width, color=color_output, alpha=0.5, edgecolor=color_output
+    )
+
+    ax2.plot(plot_steps, input_consec, '--o', color=color_input, markersize=6,
+             linewidth=2, label=f'{display_name} Input Embedding')
+    ax2.plot(plot_steps, output_consec, '--s', color=color_output, markersize=6,
+             linewidth=2, label=f'{display_name} Output Projection')
+
+    ax2.set_xlabel('Training Step', fontsize=18)
+    ax2.set_ylabel('Cos. Sim. - Prev. Step', fontsize=18)
+    ax2.legend(fontsize=14, loc='lower right')
     ax2.grid(True, alpha=0.3)
-    ax2.set_ylim(0.7, 1.02)
-    
+    ax2.tick_params(axis='both', labelsize=14)
+
     plt.tight_layout()
-    
+
     # Save figure
     fig_path = output_dir / f"figure_evolution_{model_name.replace('-', '_')}.png"
     plt.savefig(fig_path, dpi=150, bbox_inches='tight')
@@ -256,12 +306,12 @@ def main():
     parser.add_argument(
         "--output-dir",
         type=str,
-        default=".",
-        help="Directory to save results"
+        default=None,
+        help="Directory to save results (default: script directory)"
     )
     
     args = parser.parse_args()
-    output_dir = Path(args.output_dir)
+    output_dir = Path(args.output_dir) if args.output_dir else SCRIPT_DIR
     output_dir.mkdir(parents=True, exist_ok=True)
     
     # Load config
