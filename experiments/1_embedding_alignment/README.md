@@ -20,22 +20,48 @@ Compares tied embedding matrices to untied input/output matrices using:
 
 | Script | Description | Paper Output |
 |--------|-------------|--------------|
+| `reproduce_figure1.py` | Token-level alignment histograms | **Figure 1** |
 | `compare_embeddings.py` | Single model analysis | Metrics in Table 1 |
-| `compare_cross_model.py` | OLMo tied vs untied | Table 1, Figure 1 |
+| `compare_cross_model.py` | OLMo tied vs untied | Table 1 |
 | `compare_pythia_gptneo.py` | Pythia-2.8B vs GPT-Neo-2.7B | Table 1 |
 | `compare_qwen.py` | Qwen3-4B vs Qwen3-8B | (different dims, see KNN) |
 | `nn_k1.py` | KNN@1 overlap (Qwen only) | Exploratory |
 | [`Appendix_B/reproduce_table5.py`](Appendix_B/) | KNN@10 overlap (all 3 families) | Table 5 |
 
-## Usage
+## Reproducing Figure 1
+
+### Prerequisites
+
+- Models are downloaded automatically from HuggingFace:
+  - `allenai/OLMo-1B-hf` (tied)
+  - `allenai/OLMo-1B-0724-hf` (untied)
+
+### Generate Figure
 
 ```bash
-# Table 1: OLMo alignment
+python reproduce_figure1.py
+```
+
+Output: `token_level_alignment.png`
+
+### Expected Results
+
+| Alignment | Mean Cosine Similarity |
+|-----------|----------------------|
+| Input → Tied | 0.525 |
+| Output → Tied | 0.719 |
+
+---
+
+## Reproducing Table 1
+
+```bash
+# OLMo alignment
 python compare_embeddings.py --hf-model allenai/OLMo-1B-hf        # Tied
 python compare_embeddings.py --hf-model allenai/OLMo-1B-0724-hf   # Untied
 python compare_cross_model.py                                      # Cross-model
 
-# Table 1: GPT-Neo/Pythia alignment
+# GPT-Neo/Pythia alignment
 python compare_embeddings.py --hf-model EleutherAI/gpt-neo-2.7B   # Tied
 python compare_embeddings.py --hf-model EleutherAI/pythia-2.8b    # Untied
 python compare_pythia_gptneo.py                                    # Cross-model
