@@ -59,6 +59,25 @@ weight-tying-bias/
 └── requirements.txt
 ```
 
+## Environment Setup
+
+```bash
+cd weight-tying-bias
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+pip install -e './tuned-lens'
+pip install -e './OLMo[all]'
+```
+
+Verify everything is working:
+
+```bash
+python -c "import torch; print('PyTorch', torch.__version__, '| CUDA', torch.cuda.is_available())"
+python -c "import transformers; print('Transformers', transformers.__version__)"
+python -c "import tuned_lens; print('tuned-lens OK')"
+```
+
 ## Quick Start
 
 ### Experiment 1: Embedding Alignment (Table 1)
@@ -170,14 +189,6 @@ model = AutoModelForCausalLM.from_pretrained(
 - [ ] Tuned lens training scripts not yet documented
 - [ ] Missing end-to-end test script to verify all experiments run
 - [ ] `requirements.txt` versions are approximate
-
-## Requirements
-
-```bash
-pip install -r requirements.txt
-```
-
-**Note**: Some experiments require significant compute resources (GPU recommended) and may download large models (1-8GB each).
 
 ## Artifacts
 
