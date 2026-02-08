@@ -19,13 +19,8 @@ Uses the tuned lens (Belrose et al., 2023) to measure how well each layer's repr
 | Script | Description | Paper Output |
 |--------|-------------|--------------|
 | `compare_olmo_tuned_lenses.py` | OLMo-1B tied vs untied | Figure 2 |
-| `compare_pythia_vs_gptneo.py` | Pythia-2.8B vs GPT-Neo-2.7B | Figure 6 |
-| `compare_qwen3_tuned_lenses.py` | Qwen3 family comparison | Figure 7 |
-| [`Appendix_C/reproduce_figure6.py`](Appendix_C/) | Standalone Figure 6 reproduction | Figure 6 |
-| [`Appendix_C/reproduce_figure7.py`](Appendix_C/) | Standalone Figure 7 reproduction | Figure 7 |
-| `reproduce_figure3.py` | Reproduce Fig 3 from Belrose et al. | — |
-| `compare_olmo70m_tied_untied.py` | OLMo-70M tied vs untied | — |
-| `compare_pythia_tuned_lenses.py` | Pythia model family comparison | — |
+| [`Appendix_C/reproduce_figure6.py`](Appendix_C/) | Pythia-2.8B vs GPT-Neo-2.7B | Figure 6 |
+| [`Appendix_C/reproduce_figure7.py`](Appendix_C/) | Qwen3-4B vs Qwen3-8B | Figure 7 |
 
 ## Reproducing Figures 2, 6, 7
 
@@ -48,15 +43,15 @@ python compare_olmo_tuned_lenses.py
 ### Generate Figure 6 (Pythia vs GPT-Neo)
 
 ```bash
-python compare_pythia_vs_gptneo.py
-# Output: compare_pythia_vs_gptneo.png
+python Appendix_C/reproduce_figure6.py
+# Output: figure6_pythia_vs_gptneo.png
 ```
 
 ### Generate Figure 7 (Qwen3)
 
 ```bash
-python compare_qwen3_tuned_lenses.py
-# Output: compare_qwen3_36layers.png
+python Appendix_C/reproduce_figure7.py
+# Output: figure7_qwen3_comparison.png
 ```
 
 ### Models Used

@@ -100,14 +100,14 @@ python nn_k1.py
 ```bash
 cd experiments/2_tuned_lens
 
-# OLMo tied vs untied
+# OLMo tied vs untied (Figure 2)
 python compare_olmo_tuned_lenses.py
 
 # Pythia vs GPT-Neo (Figure 6)
-python compare_pythia_vs_gptneo.py
+python Appendix_C/reproduce_figure6.py
 
 # Qwen3 (Figure 7)
-python compare_qwen3_tuned_lenses.py
+python Appendix_C/reproduce_figure7.py
 ```
 
 ### Experiment 3: Embedding Evolution (Figure 3)
@@ -126,7 +126,7 @@ python track_evolution.py --config configs/evolution_pythia_1b.json
 
 ```bash
 cd experiments/4_norm_frequency
-python main.py plot-logfreq-vs-l2 --config configs/tok_config_olmo_1b_both.json
+python main.py plot-figure5 --config configs/tok_config_figure5_local.json
 ```
 
 ## Models

@@ -18,7 +18,6 @@ Measures gradient contributions from input vs output layers to the shared embedd
 | Script | Description |
 |--------|-------------|
 | `plot_gradient_provenance.py` | Generates Figure 4 from logged CSV data |
-| `verify_gradient_provenance.py` | Verifies gradient tracking doesn't affect training |
 | `gradient_provenance_tracking.md` | Documentation for OLMo integration |
 
 ## Reproducing Figure 4
@@ -64,27 +63,6 @@ The script applies a rolling average (window=20) for smoothing and produces a tw
 
 The model used for Figure 4 was trained using a custom fork of [OLMo](https://github.com/allenai/OLMo) with gradient provenance tracking hooks added to `olmo/model.py` and `olmo/train.py`.
 
-### Training Configuration
-
-| Setting | Value |
-|---------|-------|
-| Architecture | OLMo-1B (1.17B parameters) |
-| Layers | 16 |
-| Hidden Size | 2048 |
-| Attention Heads | 16 |
-| Activation | SwiGLU |
-| Position Encoding | RoPE |
-| Sequence Length | 4096 |
-| Vocab Size | 50,280 |
-| Weight Tying | **true** |
-| Gradient Tracking | `track_embedding_gradient_provenance: true` |
-| Data | Dolma v1.7 (30B tokens subset) |
-| Batch Size | 8 (microbatch=2, grad_accum=4) |
-| Learning Rate | 3e-4 |
-| Warmup Steps | 100 |
-| Scheduler | Cosine with warmup |
-| Max Steps | 1,000 |
-
 ### Setup
 
 ```bash
@@ -110,7 +88,6 @@ The critical config settings are:
 model:
   weight_tying: true
   track_embedding_gradient_provenance: true
-  # Do NOT enable clip_output_proj_to_embedding_grad_norm for Figure 4
 ```
 
 ### Train Model
@@ -123,3 +100,4 @@ torchrun --nproc_per_node=1 scripts/train.py \
 ```
 
 Checkpoints and `gradient_provenance.csv` will be saved to the `save_folder` specified in the config at every training step.
+

@@ -44,6 +44,10 @@ ENV/
 checkpoints/
 trained_lenses/
 
+# Data files
+experiments/text_data/
+experiments/4_norm_frequency/tokenized_data/
+
 # OS
 .DS_Store
 Thumbs.db
