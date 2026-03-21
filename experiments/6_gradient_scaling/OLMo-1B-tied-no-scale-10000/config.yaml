@@ -38,8 +38,8 @@ model:
   weight_tying: true
   track_embedding_gradient_provenance: true
   clip_output_proj_to_embedding_grad_norm: false
-  output_proj_clip_window_size: 5
-  output_proj_clip_scale_factor: 0.1
+  output_proj_clip_window_size: 1
+  output_proj_clip_scale_factor: 1
   embedding_grad_scale_factor: null
   output_proj_grad_scale_factor: null
   eos_token_id: 50279

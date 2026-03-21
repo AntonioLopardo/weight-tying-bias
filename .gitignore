@@ -34,19 +34,26 @@ ENV/
 # Jupyter
 .ipynb_checkpoints/
 
-# PyTorch / ML
+# PyTorch / ML artifacts
 *.pt
 *.pth
 *.ckpt
 *.safetensors
+*.bin
+!OLMo/test_fixtures/**/*.bin
+*.npy
 
-# Large files (download separately)
+# Large files (download from HuggingFace)
 checkpoints/
 trained_lenses/
+train_data/
 
 # Data files
 experiments/text_data/
 experiments/4_norm_frequency/tokenized_data/
+
+# Nested repos / LFS
+experiments/7_matching_tied_untied/.git/
 
 # OS
 .DS_Store
