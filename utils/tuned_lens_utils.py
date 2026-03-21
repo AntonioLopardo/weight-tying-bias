@@ -72,13 +72,6 @@ def compute_bias_per_layer(model, tokenizer, tuned_lens, texts, device="cuda",
     return tuned_kl
 
 
-def check_tied_embeddings(model) -> bool:
-    """Check if a model's input and output embeddings share the same memory."""
-    embed_tokens = model.get_input_embeddings()
-    lm_head = model.get_output_embeddings()
-    return embed_tokens.weight.data_ptr() == lm_head.weight.data_ptr()
-
-
 def load_model_and_tokenizer(model_name, dtype=torch.float16):
     """Load a HuggingFace model and tokenizer with standard settings."""
     from transformers import AutoModelForCausalLM, AutoTokenizer
