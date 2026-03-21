@@ -192,4 +192,15 @@ model = AutoModelForCausalLM.from_pretrained(
 
 ## Artifacts
 
-Model checkpoints and training artifacts are hosted on HuggingFace.
+Model checkpoints and trained lenses are hosted on [HuggingFace](https://huggingface.co/datasets/AntonioLopardo/weight-tying-bias-artifacts).
+
+```bash
+# Download all artifacts (~44GB)
+./download_artifacts.sh
+
+# Or download only what you need
+./download_artifacts.sh 4        # Experiment 4 checkpoints (Figure 5)
+./download_artifacts.sh 2 6      # Tuned lenses + gradient scaling checkpoints
+```
+
+Available experiments: `2` (tuned lenses), `4` (norm-frequency), `5` (gradient flow), `6` (gradient scaling).
