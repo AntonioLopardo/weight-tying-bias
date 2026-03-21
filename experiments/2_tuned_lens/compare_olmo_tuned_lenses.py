@@ -10,7 +10,7 @@ from tuned_lens.nn.lenses import TunedLens
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-sys.path.insert(0, str(SCRIPT_DIR.parent))
+sys.path.insert(0, str(SCRIPT_DIR.parent.parent))
 
 from utils.tuned_lens_utils import (
     compute_bias_per_layer, load_model_and_tokenizer, SAMPLE_TEXTS,

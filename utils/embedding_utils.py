@@ -100,11 +100,3 @@ def procrustes_cosine_similarity(source: torch.Tensor, target: torch.Tensor) -> 
     cos_sim = (aligned_norm * target_norm).sum(dim=1)
 
     return cos_sim.mean().item()
-
-
-def mean_cosine_similarity(emb1: torch.Tensor, emb2: torch.Tensor) -> float:
-    """Compute mean per-token cosine similarity between two embedding matrices."""
-    emb1_norm = emb1 / (emb1.norm(dim=1, keepdim=True) + 1e-8)
-    emb2_norm = emb2 / (emb2.norm(dim=1, keepdim=True) + 1e-8)
-    cos_sim = (emb1_norm * emb2_norm).sum(dim=1)
-    return cos_sim.mean().item()
