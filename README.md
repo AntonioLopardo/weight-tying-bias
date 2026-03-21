@@ -40,6 +40,9 @@ weight-tying-bias/
 │   ├── 5_gradient_flow/          # Section 5.3: Figure 4
 │   └── 6_gradient_scaling/       # Section 6: Tables 2, 6
 │
+├── OLMo/                         # Modified fork of allenai/OLMo (v0.6.0)
+├── tuned-lens/                   # Unmodified copy of AlignmentResearch/tuned-lens (v0.2.0)
+├── utils/                        # Shared utilities
 ├── results/
 │   ├── tables/
 │   └── figures/
@@ -47,6 +50,11 @@ weight-tying-bias/
 ├── README.md
 └── requirements.txt
 ```
+
+### Bundled Dependencies
+
+- **OLMo** — modified fork of [allenai/OLMo](https://github.com/allenai/OLMo) (v0.6.0) with gradient tracking and scaling hooks for experiments 5 and 6. See [OLMo/PROVENANCE.md](OLMo/PROVENANCE.md) for details.
+- **tuned-lens** — unmodified copy of [AlignmentResearch/tuned-lens](https://github.com/AlignmentResearch/tuned-lens) (v0.2.0, MIT license) for experiment 2.
 
 ## Environment Setup
 
