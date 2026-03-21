@@ -76,7 +76,8 @@ The pre-trained lenses included in `trained_lenses/` were trained using the [`tu
 ### Setup
 
 ```bash
-pip install tuned-lens
+# From the repository root (uses the bundled fork)
+pip install -e './tuned-lens'
 ```
 
 ### Training Scripts
