@@ -11,82 +11,32 @@ Usage:
     # Output: figure7_qwen3_comparison.png
 """
 
+import sys
 import torch
 import matplotlib.pyplot as plt
 import numpy as np
-from tqdm import tqdm
-from transformers import AutoModelForCausalLM, AutoTokenizer
 from tuned_lens.nn.lenses import TunedLens, LogitLens
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
+sys.path.insert(0, str(SCRIPT_DIR.parent.parent))
+
+from utils.tuned_lens_utils import (
+    compute_bias_per_layer, load_model_and_tokenizer, SAMPLE_TEXTS,
+)
+
 TRAINED_LENSES_DIR = SCRIPT_DIR.parent / "trained_lenses"
 
 MODELS = [
     {
         "name": "Qwen/Qwen3-4B",
         "label": "Qwen3-4B (tied)",
-        "tied": True,
     },
     {
         "name": "Qwen/Qwen3-8B",
         "label": "Qwen3-8B (untied)",
-        "tied": False,
     },
 ]
-
-SAMPLE_TEXTS = [
-    "The quick brown fox jumps over the lazy dog. This is a simple sentence to test the language model's ability to predict tokens.",
-    "In the field of machine learning, neural networks have become increasingly important for a wide variety of tasks including natural language processing.",
-    "The development of large language models has revolutionized how we interact with artificial intelligence systems.",
-    "Scientists have discovered new evidence that suggests the universe may be expanding at a faster rate than previously thought.",
-    "The economic impact of climate change continues to be a major concern for policymakers around the world.",
-    "Recent advances in quantum computing have opened up new possibilities for solving complex computational problems.",
-    "The history of human civilization is marked by periods of great innovation and technological advancement.",
-    "Music has been an integral part of human culture for thousands of years, serving both social and artistic purposes.",
-    "The study of philosophy helps us understand fundamental questions about existence, knowledge, and ethics.",
-    "Modern medicine has made remarkable progress in treating diseases that were once considered incurable.",
-]
-
-
-def compute_kl_divergence(log_p, log_q, dim=-1):
-    p = log_p.exp()
-    return torch.sum(p * (log_p - log_q), dim=dim)
-
-
-def compute_bias_per_layer(model, tokenizer, tuned_lens, logit_lens, texts, device="cuda", max_length=512):
-    num_layers = model.config.num_hidden_layers
-    tuned_kl_sum = torch.zeros(num_layers + 1, device=device)
-    logit_kl_sum = torch.zeros(num_layers + 1, device=device)
-    total_tokens = 0
-
-    model.eval()
-    tuned_lens.eval()
-
-    with torch.no_grad():
-        for text in tqdm(texts, desc="Processing texts"):
-            inputs = tokenizer(text, return_tensors="pt", truncation=True, max_length=max_length).to(device)
-            outputs = model(**inputs, output_hidden_states=True)
-            final_log_probs = torch.log_softmax(outputs.logits, dim=-1)
-            hidden_states = outputs.hidden_states
-            num_tokens = inputs.input_ids.shape[1]
-            total_tokens += num_tokens
-
-            for layer_idx in range(num_layers + 1):
-                h = hidden_states[layer_idx]
-                lens_idx = max(0, layer_idx - 1) if layer_idx > 0 else 0
-
-                tuned_log_probs = torch.log_softmax(tuned_lens(h, idx=lens_idx), dim=-1)
-                logit_log_probs = torch.log_softmax(logit_lens(h, idx=lens_idx), dim=-1)
-
-                tuned_kl_sum[layer_idx] += compute_kl_divergence(final_log_probs, tuned_log_probs).sum()
-                logit_kl_sum[layer_idx] += compute_kl_divergence(final_log_probs, logit_log_probs).sum()
-
-    nats_to_bits = 1.0 / np.log(2)
-    return (
-        (tuned_kl_sum / total_tokens).cpu().numpy() * nats_to_bits,
-        (logit_kl_sum / total_tokens).cpu().numpy() * nats_to_bits,
-    )
 
 
 def main():
@@ -101,11 +51,7 @@ def main():
 
         print(f"\n{'='*60}\nProcessing: {model_name}\n{'='*60}")
 
-        tokenizer = AutoTokenizer.from_pretrained(model_name)
-        if tokenizer.pad_token is None:
-            tokenizer.pad_token = tokenizer.eos_token
-
-        model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16, device_map="auto")
+        model, tokenizer = load_model_and_tokenizer(model_name)
         print(f"Layers: {model.config.num_hidden_layers}")
 
         local_lens_path = str(TRAINED_LENSES_DIR / model_name)
@@ -120,7 +66,7 @@ def main():
         tuned_lens = TunedLens.from_model_and_pretrained(model, lens_resource_id=local_lens_path, weights_only=True).to(device)
         logit_lens = LogitLens.from_model(model).to(device)
 
-        tuned_kl, logit_kl = compute_bias_per_layer(model, tokenizer, tuned_lens, logit_lens, SAMPLE_TEXTS, device)
+        tuned_kl, logit_kl = compute_bias_per_layer(model, tokenizer, tuned_lens, SAMPLE_TEXTS, device, logit_lens=logit_lens)
 
         results[label] = {"tuned_kl": tuned_kl, "logit_kl": logit_kl, "num_layers": model.config.num_hidden_layers}
 
@@ -134,7 +80,7 @@ def main():
     # Both models have 36 layers — plot with absolute layer indices
     colors = ["#1f77b4", "#d62728"]
     markers = ["o", "s"]
-    linestyles = ["-", "--"]  # solid for tied, dashed for untied
+    linestyles = ["-", "--"]
 
     fig, axes = plt.subplots(1, 2, figsize=(16, 7))
 
