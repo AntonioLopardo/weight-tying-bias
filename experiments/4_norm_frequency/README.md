@@ -42,7 +42,7 @@ Plots L2 norm of each token's embedding against its log-frequency in a corpus. C
 
 ```bash
 # Activate virtual environment
-source /home/vec_norm/.venv/bin/activate
+source .venv/bin/activate
 
 # Generate Figure 5 with default settings
 python main.py plot-figure5 \
@@ -63,13 +63,13 @@ The config file `configs/tok_config_figure5_local.json` specifies local model pa
 {
   "OLMo-1B-tied-10k": {
     "class": "olmo_local",
-    "path": "/home/vec_norm/weight-tying-bias/experiments/4_norm_frequency/OLMo-1B-tied",
+    "path": "experiments/4_norm_frequency/OLMo-1B-tied",
     "tokenizer": "EleutherAI/gpt-neox-20b",
     "family": "OLMo-1B-tied"
   },
   "OLMo-1B-untied-10k": {
     "class": "olmo_local",
-    "path": "/home/vec_norm/weight-tying-bias/experiments/4_norm_frequency/OLMo-1B-untied",
+    "path": "experiments/4_norm_frequency/OLMo-1B-untied",
     "tokenizer": "EleutherAI/gpt-neox-20b",
     "family": "OLMo-1B-untied"
   }
@@ -137,15 +137,14 @@ The training configs used are stored alongside the model checkpoints:
 ### Train Models
 
 ```bash
-cd /home/vec_norm/OLMo
-
+# From the repository root
 # Train tied model
-torchrun --nproc_per_node=8 scripts/train.py \
-    /home/vec_norm/weight-tying-bias/experiments/4_norm_frequency/OLMo-1B-tied/config.yaml
+torchrun --nproc_per_node=8 OLMo/scripts/train.py \
+    experiments/4_norm_frequency/OLMo-1B-tied/config.yaml
 
-# Train untied model  
-torchrun --nproc_per_node=8 scripts/train.py \
-    /home/vec_norm/weight-tying-bias/experiments/4_norm_frequency/OLMo-1B-untied/config.yaml
+# Train untied model
+torchrun --nproc_per_node=8 OLMo/scripts/train.py \
+    experiments/4_norm_frequency/OLMo-1B-untied/config.yaml
 ```
 
-Checkpoints will be saved to `/home/vec_norm/OLMo/checkpoints/` as specified in each config's `save_folder`.
+Checkpoints will be saved to the `save_folder` specified in each config.

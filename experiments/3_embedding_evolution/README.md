@@ -29,7 +29,7 @@ Tracks how input and output embedding matrices evolve during training in untied 
 1. **Python environment** with `torch`, `transformers`, `matplotlib`, `tqdm`:
 
 ```bash
-source /home/vec_norm/.venv/bin/activate
+source .venv/bin/activate
 ```
 
 2. **HuggingFace access** — model checkpoints are downloaded automatically from the Hub

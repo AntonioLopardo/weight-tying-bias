@@ -92,7 +92,7 @@ python compare_cross_model.py
 python compare_pythia_gptneo.py
 
 # KNN overlap (Table 5)
-python nn_k1.py
+python Appendix_B/reproduce_table5.py
 ```
 
 ### Experiment 2: Tuned Lens (Figure 2)
@@ -183,7 +183,7 @@ model = AutoModelForCausalLM.from_pretrained(
 
 ## Known Issues & TODOs
 
-- [ ] Scripts need path updates for standalone use (currently may reference `/home/vec_norm/`)
+- [x] Scripts updated to use relative paths
 - [ ] `track_evolution.py` untested with all checkpoint revisions
 - [ ] Some HuggingFace checkpoint revisions may not exist or have different naming
 - [ ] Tuned lens training scripts not yet documented
