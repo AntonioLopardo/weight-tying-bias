@@ -6,7 +6,6 @@ Figure 3 shows: Bias of logit lens and tuned lens outputs relative to the final 
 for GPT-Neo-2.7B. The bias is measured as KL divergence (in bits) at each layer.
 """
 
-import sys
 import torch
 import matplotlib.pyplot as plt
 import numpy as np
@@ -14,7 +13,6 @@ from pathlib import Path
 from tuned_lens.nn.lenses import TunedLens, LogitLens
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-sys.path.insert(0, str(SCRIPT_DIR.parent))
 
 from utils.tuned_lens_utils import (
     compute_bias_per_layer, load_model_and_tokenizer, SAMPLE_TEXTS,
