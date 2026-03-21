@@ -11,7 +11,7 @@ This document lists all models used in "Weight Tying Biases Token Embeddings Tow
 | GPT-Neo-2.7B | `EleutherAI/gpt-neo-2.7B` | **Tied** | Table 1, 5; Fig 6 |
 | Pythia-2.8B | `EleutherAI/pythia-2.8b` | Untied | Table 1, 5; Fig 6 |
 | Pythia-1B | `EleutherAI/pythia-1b` | Untied | Fig 9 (Appendix D) |
-| OLMo-7B-0724 | `allenai/OLMo-7B-0724-hf` | Untied | Fig 8 (Appendix D) |
+| OLMo-7B-0424 | `allenai/OLMo-7B-0424-hf` | Untied | Fig 8 (Appendix D) |
 | Qwen3-4B | `Qwen/Qwen3-4B` | **Tied** | Table 5; Fig 7 |
 | Qwen3-8B | `Qwen/Qwen3-8B` | Untied | Table 5; Fig 7 |
 
@@ -59,8 +59,8 @@ step50000-tokens104B   # Mid training
 step100000-tokens209B  # Later training
 ```
 
-#### OLMo-7B-0724 (Untied)
-- **HuggingFace ID:** `allenai/OLMo-7B-0724-hf`
+#### OLMo-7B-0424 (Untied)
+- **HuggingFace ID:** `allenai/OLMo-7B-0424-hf`
 - **Weight Tying:** No
 - **Paper Usage:**
   - Figure 8 (Appendix D): Embedding evolution at scale
@@ -200,7 +200,7 @@ def check_weight_tying(model):
 | Figure 5 | OLMo-1B (tied) and OLMo-1B-0724 (untied) at step 10k |
 | Figure 6 | GPT-Neo-2.7B (tied) vs Pythia-2.8B (untied) |
 | Figure 7 | Qwen3-4B (tied) vs Qwen3-8B (untied) |
-| Figure 8 | OLMo-7B-0724 (untied) checkpoints |
+| Figure 8 | OLMo-7B-0424 (untied) checkpoints |
 | Figure 9 | Pythia-1B (untied) checkpoints |
 
 | Table | Models Used |

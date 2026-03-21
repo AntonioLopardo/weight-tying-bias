@@ -31,7 +31,7 @@ Repeats the gradient scaling ablation from Section 6 (Table 2) at an earlier tra
 3. **Python environment** with `torch`, `transformers`:
 
 ```bash
-source /home/vec_norm/.venv/bin/activate
+source .venv/bin/activate
 ```
 
 ### Compute Alignment (Table 6)
@@ -73,7 +73,7 @@ Same as Table 2 (see `../README.md`) except:
 ### Train Models
 
 ```bash
-cd /home/vec_norm/OLMo
+# From the repository root
 
 # Baseline (no scaling)
 torchrun --nproc_per_node=1 scripts/train.py \

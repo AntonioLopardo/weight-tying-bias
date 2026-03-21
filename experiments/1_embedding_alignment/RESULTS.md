@@ -41,7 +41,7 @@ We analyze the relationship between input embeddings (token → hidden) and outp
 
 ```bash
 source .venv/bin/activate && python emb_similarity/compare_embeddings.py \
-    --checkpoint /home/vec_norm/OLMo/checkpoints/OLMo-1B-0724-reproduce/step2000-unsharded
+    --checkpoint checkpoints/OLMo-1B-0724-reproduce/step2000-unsharded
 ```
 
 **Results:**

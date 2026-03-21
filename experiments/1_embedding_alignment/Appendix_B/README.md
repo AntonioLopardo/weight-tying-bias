@@ -19,7 +19,7 @@ This metric complements Procrustes alignment (Table 1) by capturing local neighb
 1. **Python environment** with `torch`, `transformers`:
 
 ```bash
-source /home/vec_norm/.venv/bin/activate
+source .venv/bin/activate
 ```
 
 2. **HuggingFace access** — all models downloaded automatically
