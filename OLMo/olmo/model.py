@@ -2031,7 +2031,7 @@ class OLMo(nn.Module):
 
             # Load state dict directly to target device.
             state_dict_path = resource_path(checkpoint_dir, "model.pt")
-            state_dict = torch.load(state_dict_path, map_location="cpu")
+            state_dict = torch.load(state_dict_path, map_location="cpu", weights_only=False)
             model.load_state_dict(model._make_state_dict_compatible(state_dict)[0])
             model = model.to(torch.device(device))
         else:
