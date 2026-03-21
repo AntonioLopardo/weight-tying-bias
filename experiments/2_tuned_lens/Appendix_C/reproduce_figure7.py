@@ -6,7 +6,7 @@ across layers for Qwen3-4B (tied) vs Qwen3-8B (untied).
 Both models have 36 layers, enabling direct layer-by-layer comparison.
 
 Usage:
-    source /home/vec_norm/.venv/bin/activate
+    source .venv/bin/activate
     python reproduce_figure7.py
     # Output: figure7_qwen3_comparison.png
 """

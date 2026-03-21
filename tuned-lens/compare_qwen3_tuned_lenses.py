@@ -180,7 +180,7 @@ def main():
         print(f"Tied embeddings: {actual_tied} (expected: {expected_tied})")
         
         # Load tuned lens
-        local_lens_path = f"/home/vec_norm/tuned-lens/trained_lenses/{model_name}"
+        local_lens_path = str(Path(__file__).parent / "trained_lenses" / model_name)
         
         if not Path(local_lens_path).exists():
             print(f"WARNING: Tuned lens not found at {local_lens_path}")

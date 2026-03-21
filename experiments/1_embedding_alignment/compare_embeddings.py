@@ -357,7 +357,7 @@ def main():
         source = f"Local: {args.checkpoint}"
     else:
         # Default to local checkpoint
-        default_path = "/home/vec_norm/OLMo/checkpoints/OLMo-1B-0724-reproduce/step2000-unsharded"
+        default_path = "checkpoints/OLMo-1B-0724-reproduce/step2000-unsharded"
         print(f"Loading checkpoint from: {default_path}")
         state_dict, config, model_format = load_checkpoint(default_path)
         source = f"Local: {default_path}"

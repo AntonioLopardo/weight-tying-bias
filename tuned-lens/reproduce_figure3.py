@@ -183,7 +183,7 @@ def main():
     # Load lenses
     print("Loading tuned lens...")
     # Check for local trained lens first
-    local_lens_path = f"/home/vec_norm/tuned-lens/trained_lenses/{model_name}"
+    local_lens_path = str(Path(__file__).parent / "trained_lenses" / model_name)
     try:
         from pathlib import Path
         if Path(local_lens_path).exists():

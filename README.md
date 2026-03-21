@@ -1,19 +1,8 @@
 # Weight Tying Biases Token Embeddings Towards the Unembedding Space
 
-> **Work in Progress**: Scripts may not work as intended and documentation is incomplete.
-
 Reproduction repository for the ACL submission analyzing how weight tying affects the relationship between input (embedding) and output (unembedding) matrices in language models.
 
-## Status
-
-This codebase consolidates scripts and artifacts from multiple sources. While the core analysis scripts exist, they have not been fully tested end-to-end in a clean environment. Known limitations:
-
-- **Dependency versions** are approximate and may need adjustment
-- **Paths** in some scripts may reference original development locations
-- **Some experiments** require large model downloads or training infrastructure
-- **Documentation** for individual scripts varies in completeness
-
-We are working to improve reproducibility. Please open an issue if you encounter problems.
+Please open an issue if you encounter problems.
 
 ## Abstract
 
@@ -180,15 +169,6 @@ model = AutoModelForCausalLM.from_pretrained(
 |-------|-----------------|------------------|
 | Baseline | 0.216 | 0.384 |
 | Input ×5 | 0.222 (+0.006) | 0.369 (-0.015) |
-
-## Known Issues & TODOs
-
-- [x] Scripts updated to use relative paths
-- [ ] `track_evolution.py` untested with all checkpoint revisions
-- [ ] Some HuggingFace checkpoint revisions may not exist or have different naming
-- [ ] Tuned lens training scripts not yet documented
-- [ ] Missing end-to-end test script to verify all experiments run
-- [ ] `requirements.txt` versions are approximate
 
 ## Artifacts
 
