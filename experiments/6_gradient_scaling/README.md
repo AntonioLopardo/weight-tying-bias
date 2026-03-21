@@ -39,7 +39,7 @@ With 5× input gradient scaling at step 10K:
 
 ```bash
 # Activate virtual environment
-source /home/vec_norm/.venv/bin/activate
+source .venv/bin/activate
 
 # Reproduce Table 2
 python reproduce_table2.py
@@ -68,7 +68,7 @@ python reproduce_table2.py
 
 ## Model Training Reproduction
 
-The models were trained using a custom fork of [OLMo](https://github.com/allenai/OLMo) with gradient scaling hooks added to `olmo/model.py`. The key config difference between baseline and scaled models is `embedding_grad_scale_factor`.
+The models were trained using the **bundled OLMo fork** (`../../OLMo/`) with gradient scaling hooks. See [`../../OLMo/PROVENANCE.md`](../../OLMo/PROVENANCE.md) for details on the modifications. The key config difference between baseline and scaled models is `embedding_grad_scale_factor`.
 
 ### Training Configuration
 
@@ -93,10 +93,8 @@ The models were trained using a custom fork of [OLMo](https://github.com/allenai
 ### Setup
 
 ```bash
-# Clone custom OLMo fork with gradient scaling hooks
-cd /home/vec_norm/OLMo
-
-pip install -e '.[all]'
+# From the repository root
+pip install -e './OLMo[all]'
 
 # Training data (shared across experiments)
 # Data should be at: experiments/text_data/dolma_v1_7/dolma_v1_7_30B.npy
@@ -114,19 +112,18 @@ The training configs are stored alongside the model checkpoints:
 ### Train Models
 
 ```bash
-cd /home/vec_norm/OLMo
-
+# From the repository root
 # Train tied baseline (no scaling)
-torchrun --nproc_per_node=8 scripts/train.py \
-    weight-tying-bias/experiments/6_gradient_scaling/OLMo-1B-tied-no-scale-10000/config.yaml
+torchrun --nproc_per_node=8 OLMo/scripts/train.py \
+    experiments/6_gradient_scaling/OLMo-1B-tied-no-scale-10000/config.yaml
 
 # Train tied with 5× input gradient scaling
-torchrun --nproc_per_node=8 scripts/train.py \
-    weight-tying-bias/experiments/6_gradient_scaling/OLMo-1B-tied-emb5-10000/config.yaml
+torchrun --nproc_per_node=8 OLMo/scripts/train.py \
+    experiments/6_gradient_scaling/OLMo-1B-tied-emb5-10000/config.yaml
 
 # Train untied reference
-torchrun --nproc_per_node=8 scripts/train.py \
-    weight-tying-bias/experiments/6_gradient_scaling/OLMo-1B-untied-10000/config.yaml
+torchrun --nproc_per_node=8 OLMo/scripts/train.py \
+    experiments/6_gradient_scaling/OLMo-1B-untied-10000/config.yaml
 ```
 
 Checkpoints will be saved to each config's `save_folder`.
