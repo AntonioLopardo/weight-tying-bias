@@ -25,7 +25,7 @@ Uses the same `track_evolution.py` script and metrics (cumulative drift + per-st
 1. **Python environment** with `torch`, `transformers`, `matplotlib`, `tqdm`:
 
 ```bash
-source /home/vec_norm/.venv/bin/activate
+source .venv/bin/activate
 ```
 
 2. **HuggingFace access** — checkpoints downloaded automatically

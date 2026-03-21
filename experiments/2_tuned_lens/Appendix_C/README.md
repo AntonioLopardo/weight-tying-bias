@@ -30,7 +30,7 @@ Extends the tuned lens analysis from Section 4.2 (Figure 2, OLMo) to two additio
 1. **Python environment** with `torch`, `transformers`, `tuned-lens`, `matplotlib`:
 
 ```bash
-source /home/vec_norm/.venv/bin/activate
+source .venv/bin/activate
 ```
 
 2. **Pre-trained tuned lenses** in `../trained_lenses/` (included in parent experiment directory):
