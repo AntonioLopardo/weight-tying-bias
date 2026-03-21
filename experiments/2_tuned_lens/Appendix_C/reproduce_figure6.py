@@ -9,7 +9,6 @@ Usage:
     # Output: figure6_pythia_vs_gptneo.png
 """
 
-import sys
 import torch
 import matplotlib.pyplot as plt
 import numpy as np
@@ -17,7 +16,6 @@ from tuned_lens.nn.lenses import TunedLens, LogitLens
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-sys.path.insert(0, str(SCRIPT_DIR.parent.parent.parent))
 
 from utils.tuned_lens_utils import (
     compute_bias_per_layer, load_model_and_tokenizer, SAMPLE_TEXTS,

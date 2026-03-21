@@ -10,10 +10,8 @@ Usage:
 """
 
 import os
-import sys
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(SCRIPT_DIR, "..", ".."))
 
 from utils.embedding_utils import load_embeddings_from_checkpoint, procrustes_cosine_similarity
 
