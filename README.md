@@ -192,4 +192,4 @@ model = AutoModelForCausalLM.from_pretrained(
 
 ## Artifacts
 
-Code and artifacts also available at: https://osf.io/cn54y/
+Model checkpoints and training artifacts are hosted on HuggingFace.
