@@ -11,7 +11,7 @@ This metric works even when embedding dimensions differ (Qwen3-4B vs 8B)
 because neighbors are identified by token index, not vector distance.
 
 Usage:
-    source /home/vec_norm/.venv/bin/activate
+    source .venv/bin/activate
     python reproduce_table5.py
 """
 

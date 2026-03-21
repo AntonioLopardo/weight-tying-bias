@@ -6,6 +6,7 @@ Uses pretrained lenses from HuggingFace.
 import torch
 import matplotlib.pyplot as plt
 import numpy as np
+from pathlib import Path
 from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from tuned_lens.nn.lenses import TunedLens, LogitLens
@@ -17,12 +18,12 @@ MODELS = [
     {
         "name": "EleutherAI/pythia-2.8b",
         "label": "Pythia-2.8B",
-        "lens_path": "/home/vec_norm/tuned-lens/trained_lenses/EleutherAI/pythia-2.8b",
+        "lens_path": str(Path(__file__).parent / "trained_lenses" / "EleutherAI" / "pythia-2.8b"),
     },
     {
         "name": "EleutherAI/gpt-neo-2.7B",
         "label": "GPT-Neo-2.7B",
-        "lens_path": "/home/vec_norm/tuned-lens/trained_lenses/EleutherAI/gpt-neo-2.7B",
+        "lens_path": str(Path(__file__).parent / "trained_lenses" / "EleutherAI" / "gpt-neo-2.7B"),
     },
 ]
 

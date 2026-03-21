@@ -5,7 +5,7 @@ between tied OLMo-1B embedding matrices (with gradient scaling) and the
 input/output matrices of untied OLMo-1B-0724 at step 1K.
 
 Usage:
-    source /home/vec_norm/.venv/bin/activate
+    source .venv/bin/activate
     python reproduce_table6.py
 """
 

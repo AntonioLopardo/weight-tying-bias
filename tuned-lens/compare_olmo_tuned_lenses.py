@@ -92,7 +92,7 @@ def main():
         )
         
         # Load tuned lens
-        local_lens_path = f"/home/vec_norm/tuned-lens/trained_lenses/{model_name}"
+        local_lens_path = str(Path(__file__).parent / "trained_lenses" / model_name)
         tuned_lens = TunedLens.from_model_and_pretrained(
             model, 
             lens_resource_id=local_lens_path,

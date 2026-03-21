@@ -4,7 +4,7 @@ Reproduce Figure 6 (Appendix C): Tuned lens and logit lens KL divergence
 across layers for Pythia-2.8B (untied) vs GPT-Neo-2.7B (tied).
 
 Usage:
-    source /home/vec_norm/.venv/bin/activate
+    source .venv/bin/activate
     python reproduce_figure6.py
     # Output: figure6_pythia_vs_gptneo.png
 """
