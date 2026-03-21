@@ -36,7 +36,7 @@ Measures gradient contributions from input vs output layers to the shared embedd
 
 ```bash
 # Activate virtual environment
-source /home/vec_norm/.venv/bin/activate
+source .venv/bin/activate
 
 # Generate Figure 4 from existing CSV data
 python plot_gradient_provenance.py \
@@ -61,15 +61,13 @@ The script applies a rolling average (window=20) for smoothing and produces a tw
 
 ## Model Training Reproduction
 
-The model used for Figure 4 was trained using a custom fork of [OLMo](https://github.com/allenai/OLMo) with gradient provenance tracking hooks added to `olmo/model.py` and `olmo/train.py`.
+The model used for Figure 4 was trained using the **bundled OLMo fork** (`../../OLMo/`) with gradient provenance tracking hooks. See [`../../OLMo/PROVENANCE.md`](../../OLMo/PROVENANCE.md) for details on the modifications.
 
 ### Setup
 
 ```bash
-# Clone custom OLMo fork with gradient provenance hooks
-cd /home/vec_norm/OLMo
-
-pip install -e '.[all]'
+# From the repository root
+pip install -e './OLMo[all]'
 
 # Training data (shared across experiments)
 # Data should be at: experiments/text_data/dolma_v1_7/dolma_v1_7_30B.npy
@@ -93,10 +91,9 @@ model:
 ### Train Model
 
 ```bash
-cd /home/vec_norm/OLMo
-
-torchrun --nproc_per_node=1 scripts/train.py \
-    weight-tying-bias/experiments/5_gradient_flow/OLMo-1B-tied-grad-provenance/config.yaml
+# From the repository root
+torchrun --nproc_per_node=1 OLMo/scripts/train.py \
+    experiments/5_gradient_flow/OLMo-1B-tied-grad-provenance/config.yaml
 ```
 
 Checkpoints and `gradient_provenance.csv` will be saved to the `save_folder` specified in the config at every training step.
