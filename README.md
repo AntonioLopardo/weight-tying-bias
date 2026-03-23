@@ -78,12 +78,12 @@ python -c "import tuned_lens; print('tuned-lens OK')"
 
 ## Quick Start
 
-### Experiment 1: Embedding Alignment (Table 1)
+### Experiment 1: Embedding Alignment (Table 1, Figure 1)
 
 ```bash
 cd experiments/1_embedding_alignment
 
-# OLMo comparison
+# OLMo comparison (Figure 1)
 python compare_cross_model.py
 
 # GPT-Neo/Pythia comparison
@@ -93,7 +93,11 @@ python compare_pythia_gptneo.py
 python Appendix_B/reproduce_table5.py
 ```
 
-### Experiment 2: Tuned Lens (Figure 2)
+![Figure 1](results/figures/figure1_token_level_alignment.png)
+
+---
+
+### Experiment 2: Tuned Lens (Figures 2, 6, 7)
 
 ```bash
 cd experiments/2_tuned_lens
@@ -108,7 +112,13 @@ python Appendix_C/reproduce_figure6.py
 python Appendix_C/reproduce_figure7.py
 ```
 
-### Experiment 3: Embedding Evolution (Figure 3)
+![Figure 2](results/figures/figure2_tuned_lens_olmo.png)
+![Figure 6](results/figures/figure6_tuned_lens_pythia_gptneo.png)
+![Figure 7](results/figures/figure7_tuned_lens_qwen3.png)
+
+---
+
+### Experiment 3: Embedding Evolution (Figures 3, 8, 9)
 
 ```bash
 cd experiments/3_embedding_evolution
@@ -116,9 +126,18 @@ cd experiments/3_embedding_evolution
 # OLMo-1B-0724 (Figure 3)
 python track_evolution.py --config configs/evolution_olmo_1b.json
 
+# OLMo-7B (Figure 8, Appendix D)
+python track_evolution.py --config configs/evolution_olmo_7b.json
+
 # Pythia-1B (Figure 9)
 python track_evolution.py --config configs/evolution_pythia_1b.json
 ```
+
+![Figure 3](results/figures/figure3_embedding_evolution_olmo.png)
+![Figure 8](results/figures/figure8_embedding_evolution_olmo7b.png)
+![Figure 9](results/figures/figure9_embedding_evolution_pythia.png)
+
+---
 
 ### Experiment 4: Norm-Frequency (Figure 5)
 
@@ -126,6 +145,8 @@ python track_evolution.py --config configs/evolution_pythia_1b.json
 cd experiments/4_norm_frequency
 python main.py plot-figure5 --config configs/tok_config_figure5_local.json
 ```
+
+![Figure 5](results/figures/figure5_norm_frequency.png)
 
 ## Models
 
@@ -171,6 +192,8 @@ model = AutoModelForCausalLM.from_pretrained(
 
 - Output gradients: 80-90% of total signal
 - Input gradients: 10-20% of total signal
+
+![Figure 4](results/figures/figure4_gradient_flow.png)
 
 ### Table 2: Gradient Scaling Effect (Step 10K)
 
