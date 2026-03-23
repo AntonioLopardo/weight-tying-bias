@@ -10,11 +10,13 @@ import numpy as np
 from pathlib import Path
 
 
-def plot_gradient_provenance(csv_path: str, output_path: str = None, window: int = 20):
+def plot_gradient_provenance(csv_path: str, output_path: str = None, window: int = 20, max_steps: int = None):
     """Plot gradient provenance metrics with rolling average smoothing."""
-    
+
     # Load data
     df = pd.read_csv(csv_path)
+    if max_steps is not None:
+        df = df[df['step'] <= max_steps]
     
     # Colors matching the new color scheme
     color_input = "#648FFF"   # Blue for Input
@@ -101,7 +103,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Plot gradient provenance metrics')
     parser.add_argument('csv_path', help='Path to gradient_provenance.csv')
     parser.add_argument('--output', '-o', help='Output path for plot (default: same dir as CSV)')
+    parser.add_argument('--max-steps', type=int, default=None, help='Only plot up to this many steps')
     args = parser.parse_args()
-    
-    plot_gradient_provenance(args.csv_path, args.output)
+
+    plot_gradient_provenance(args.csv_path, args.output, max_steps=args.max_steps)
 
