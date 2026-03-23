@@ -31,7 +31,7 @@ download_experiment() {
         5)
             echo "Downloading gradient flow checkpoint (Experiment 5: Figure 4)..."
             huggingface-cli download "$HF_REPO" \
-                --include "experiments/5_gradient_flow/OLMo-1B-tied-grad-provenance/model.pt" \
+                --include "experiments/5_gradient_flow/OLMo-1B-tied-no-scale-10000/model.pt" \
                 --local-dir "$DEST_DIR"
             ;;
         6)
