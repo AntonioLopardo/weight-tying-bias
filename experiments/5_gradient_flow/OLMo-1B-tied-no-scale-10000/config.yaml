@@ -1,4 +1,4 @@
-run_name: OLMo-1B-grad-provenance-1000
+run_name: OLMo-1B-tied-no-scale-10000
 seed: 6198
 epoch: null
 dry_run: false
@@ -37,6 +37,11 @@ model:
   embedding_size: 50304
   weight_tying: true
   track_embedding_gradient_provenance: true
+  clip_output_proj_to_embedding_grad_norm: false
+  output_proj_clip_window_size: 1
+  output_proj_clip_scale_factor: 1
+  embedding_grad_scale_factor: null
+  output_proj_grad_scale_factor: null
   eos_token_id: 50279
   pad_token_id: 1
   init_device: cuda
@@ -64,7 +69,7 @@ optimizer:
 scheduler:
   name: cosine_with_warmup
   units: steps
-  t_warmup: 100
+  t_warmup: 1000
   t_max: null
   alpha_f: 0.1
   grad_clip_warmup_steps: null
@@ -95,11 +100,11 @@ eval_interval: 500
 tokenizer:
   identifier: tokenizers/allenai_eleuther-ai-gpt-neox-20b-pii-special.json
   truncate_direction: right
-save_folder: /home/vec_norm/weight-tying-bias/experiments/5_gradient_flow/OLMo-1B-tied-grad-provenance/checkpoints
+save_folder: /home/vec_norm/weight-tying-bias/experiments/6_gradient_scaling/OLMo-1B-tied-no-scale-10000/checkpoints
 remote_save_folder: null
 canceled_check_interval: 50
 save_interval: 1000
-save_interval_unsharded: 500
+save_interval_unsharded: 2500
 save_interval_ephemeral: null
 save_num_checkpoints_to_keep: 2
 save_num_unsharded_checkpoints_to_keep: 2
@@ -113,14 +118,14 @@ reset_optimizer_state: false
 reset_trainer_state: false
 sharded_checkpointer: torch_legacy
 new_style_checkpoints: null
-max_duration: 1000
-global_train_batch_size: 8
-device_train_batch_size: 8
-device_train_microbatch_size: 2
+max_duration: 10000
+global_train_batch_size: 512
+device_train_batch_size: 64
+device_train_microbatch_size: 8
 device_eval_batch_size: 8
 eval_subset_num_batches: -1
 eval_on_load: false
-device_train_grad_accum: 4
+device_train_grad_accum: 8
 max_grad_norm: 1.0
 max_grad_norm_ratio: null
 precision: amp_bf16
@@ -128,11 +133,13 @@ wandb:
   project: VecNorm
   entity: null
   group: null
-  name: OLMo-1B-grad-provenance-1000
+  name: OLMo-1B-tied-no-scale-10000
   tags:
   - grad-provenance
+  - grad-scaling
   - experiment
-  - 1000-steps
+  - 10000-steps
+  - tied
   log_artifacts: false
   rank_zero_only: true
   log_interval: 1

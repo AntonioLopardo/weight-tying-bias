@@ -8,9 +8,9 @@ Measures gradient contributions from input vs output layers to the shared embedd
 
 ## Key Finding
 
-> Output-layer gradients account for 80-90% of the total signal in early training, gradually decreasing to around 75% by step 1000.
+> Output-layer gradients dominate the total signal throughout training, accounting for ~70% of the gradient norm over 10,000 steps.
 
-- Output gradients exceed input gradients by factor of 5-10x throughout first 1000 steps
+- Output gradients consistently exceed input gradients
 - This explains why tied embeddings develop output-like structure
 
 ## Scripts
@@ -25,9 +25,9 @@ Measures gradient contributions from input vs output layers to the shared embedd
 ### Prerequisites
 
 1. **Gradient provenance CSV** in this directory:
-   - `OLMo-1B-tied-grad-provenance/gradient_provenance.csv` - Per-step gradient norms from 1000 steps of training
-   - `OLMo-1B-tied-grad-provenance/config.yaml` - Training config used to produce the CSV
-   - `OLMo-1B-tied-grad-provenance/model.pt` - Model weights at step 1000
+   - `OLMo-1B-tied-no-scale-10000/gradient_provenance.csv` - Per-step gradient norms from 10,000 steps of training
+   - `OLMo-1B-tied-no-scale-10000/config.yaml` - Training config used to produce the CSV
+   - `OLMo-1B-tied-no-scale-10000/model.pt` - Model weights at step 10,000 (downloaded via `./download_artifacts.sh 5` from the repo root)
 
 2. **Training data** (shared across experiments):
    - `../text_data/dolma_v1_7/dolma_v1_7_30B.npy` — see `../text_data/README.md`
@@ -35,12 +35,12 @@ Measures gradient contributions from input vs output layers to the shared embedd
 ### Generate Figure 4
 
 ```bash
-# Activate virtual environment
+# From the repository root
 source .venv/bin/activate
 
 # Generate Figure 4 from existing CSV data
 python plot_gradient_provenance.py \
-    OLMo-1B-tied-grad-provenance/gradient_provenance.csv \
+    OLMo-1B-tied-no-scale-10000/gradient_provenance.csv \
     --output results/figures/figure4_gradient_provenance.png
 
 # Output: results/figures/figure4_gradient_provenance.png
@@ -63,6 +63,27 @@ The script applies a rolling average (window=20) for smoothing and produces a tw
 
 The model used for Figure 4 was trained using the **bundled OLMo fork** (`../../OLMo/`) with gradient provenance tracking hooks. See [`../../OLMo/PROVENANCE.md`](../../OLMo/PROVENANCE.md) for details on the modifications.
 
+### Training Configuration
+
+| Setting | Value |
+|---------|-------|
+| Architecture | OLMo-1B (1.17B parameters) |
+| Layers | 16 |
+| Hidden Size | 2048 |
+| Attention Heads | 16 |
+| Activation | SwiGLU |
+| Position Encoding | RoPE |
+| Sequence Length | 4,096 |
+| Vocab Size | 50,280 |
+| Weight Tying | **true** |
+| Gradient Tracking | `track_embedding_gradient_provenance: true` |
+| Data | Dolma v1.7 (30B tokens subset) |
+| Batch Size | 512 (microbatch=8, grad_accum=8) |
+| Learning Rate | 3e-4 |
+| Warmup Steps | 1,000 |
+| Scheduler | Cosine with warmup |
+| Max Steps | 10,000 |
+
 ### Setup
 
 ```bash
@@ -78,7 +99,7 @@ pip install -e './OLMo[all]'
 
 The training config used is stored alongside the data:
 
-- **Tied model with tracking**: `OLMo-1B-tied-grad-provenance/config.yaml` (sets `weight_tying: true`, `track_embedding_gradient_provenance: true`)
+- **Tied model with tracking**: `OLMo-1B-tied-no-scale-10000/config.yaml` (sets `weight_tying: true`, `track_embedding_gradient_provenance: true`)
 
 The critical config settings are:
 
@@ -93,8 +114,7 @@ model:
 ```bash
 # From the repository root
 torchrun --nproc_per_node=1 OLMo/scripts/train.py \
-    experiments/5_gradient_flow/OLMo-1B-tied-grad-provenance/config.yaml
+    experiments/5_gradient_flow/OLMo-1B-tied-no-scale-10000/config.yaml
 ```
 
 Checkpoints and `gradient_provenance.csv` will be saved to the `save_folder` specified in the config at every training step.
-
