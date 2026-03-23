@@ -38,9 +38,10 @@ Measures gradient contributions from input vs output layers to the shared embedd
 # From the repository root
 source .venv/bin/activate
 
-# Generate Figure 4 from existing CSV data
+# Generate Figure 4 from existing CSV data (first 1000 steps, matching paper)
 python plot_gradient_provenance.py \
     OLMo-1B-tied-no-scale-10000/gradient_provenance.csv \
+    --max-steps 1000 \
     --output results/figures/figure4_gradient_provenance.png
 
 # Output: results/figures/figure4_gradient_provenance.png
@@ -56,6 +57,7 @@ The script applies a rolling average (window=20) for smoothing and produces a tw
 |--------|---------|-------------|
 | `csv_path` | Required | Path to `gradient_provenance.csv` |
 | `--output` | Same directory as CSV | Output path for the figure |
+| `--max-steps` | None (all steps) | Only plot up to this many steps |
 
 ---
 
