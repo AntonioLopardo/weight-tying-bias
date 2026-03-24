@@ -10,7 +10,7 @@ Weight tying—sharing parameters between input and output embedding matrices—
 
 1. **Tied embeddings align with output, not input** (Table 1, Figure 1)
 2. **Early layers suffer** — elevated KL divergence in tuned lens (Figure 2)
-3. **Output gradients dominate** — 80-90% of learning signal early in training (Figure 4)
+3. **Output gradients dominate** — ~70% of learning signal early in training (Figure 4)
 4. **Gradient scaling confirms causality** — amplifying input gradients shifts structure (Table 2)
 
 ## Paper → Code Mapping
@@ -190,8 +190,8 @@ model = AutoModelForCausalLM.from_pretrained(
 
 ### Figure 4: Gradient Flow (First 1000 steps)
 
-- Output gradients: 80-90% of total signal
-- Input gradients: 10-20% of total signal
+- Output gradients: ~70% of total signal
+- Input gradients: ~30% of total signal
 
 ![Figure 4](results/figures/figure4_gradient_flow.png)
 
