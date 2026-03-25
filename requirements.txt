@@ -21,6 +21,9 @@ datasets>=2.14.0
 # YAML config parsing (Experiments 1, 2)
 PyYAML>=6.0
 
+# Sparse eigendecomposition (Appendix B — spectral distance)
+scipy>=1.10
+
 # Optional: for OLMo-native checkpoint loading (Experiments 4, 5)
 # ai2-olmo>=0.3.0
 

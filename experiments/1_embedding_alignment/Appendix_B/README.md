@@ -58,3 +58,38 @@ python reproduce_table5.py
 | Untied Input vs Untied Output | **0.611** |
 
 **Note:** GPT-Neo/Pythia uses aligned vocabulary (~36,938 common tokens).
+
+---
+
+# Spectral Distance
+
+Measures spectral distance between embedding spaces using the omnibus embedding approach from ["Comparing Foundation Models using Data Kernels"](https://arxiv.org/abs/2305.05126) (arxiv 2305.05126).
+
+Algorithm:
+1. Build k-NN adjacency matrices for each embedding space (symmetric, hollow)
+2. Construct omnibus matrix: `M = [[A_a, (A_a+A_b)/2], [(A_a+A_b)/2, A_b]]`
+3. Adjacency Spectral Embedding (ASE): top eigenpairs of M via `scipy.sparse.linalg.eigsh`
+4. Latent positions `Z = U * sqrt(|S|)`, split into `Z_a`, `Z_b`
+5. Spectral distance = `||Z_a - Z_b||_2 / min(||Z_a||_2, ||Z_b||_2)`
+
+## Reproduce
+
+```bash
+python reproduce_spectral_distance.py
+```
+
+Optional flags:
+```
+--k INT            Nearest neighbors for graph construction (default: 64)
+--n-components INT ASE embedding dimension (default: 128)
+```
+
+### Expected Results
+
+| Comparison | Spectral Distance |
+|---|---|
+| Input (U) → Output (U) | 1.349170 |
+| Output (U) → Tied | **0.587575** |
+| Input (U) → Tied | 1.372574 |
+
+Lower = more similar. The tied matrix is closer to the untied output embedding than to the untied input embedding, consistent with the output-bias hypothesis.
