@@ -1,4 +1,4 @@
-# Appendix B: KNN & Spectral Distance Analysis
+# Appendix B: KNN Overlap and Spectral Distance Analysis
 
 **Paper Outputs:** Table 5, Spectral Distance
 
@@ -7,7 +7,7 @@
 | Script | Description | Output |
 |--------|-------------|--------|
 | `reproduce_table5.py` | KNN@10 overlap (all 3 model families) | Table 5 |
-| `reproduce_spectral_distance.py` | Omnibus embedding spectral distance | Appendix B |
+| `reproduce_spectral_distance.py` | Omnibus embedding spectral distance (all 3 model families) | Appendix B |
 | `compare_qwen.py` | Qwen3-4B vs Qwen3-8B embedding alignment | Exploratory |
 | `nn_k1.py` | KNN@1 overlap (Qwen only) | Exploratory |
 
@@ -103,8 +103,17 @@ Optional flags:
 
 | Comparison | Spectral Distance |
 |---|---|
-| Input (U) → Output (U) | 1.349170 |
-| Output (U) → Tied | **0.587575** |
-| Input (U) → Tied | 1.372574 |
+| **OLMo-1B (tied) vs OLMo-1B-0724 (untied)** | |
+| Tied vs Untied Input | 1.372574 |
+| Tied vs Untied Output | **0.587576** |
+| Untied Input vs Untied Output | 1.349170 |
+| **Qwen3-4B (tied) vs Qwen3-8B (untied)** | |
+| Tied vs Untied Input | 1.440570 |
+| Tied vs Untied Output | **0.809454** |
+| Untied Input vs Untied Output | 1.421029 |
+| **GPT-Neo-2.7B (tied) vs Pythia-2.8B (untied)** | |
+| Tied vs Untied Input | 1.462022 |
+| Tied vs Untied Output | 1.034541 |
+| Untied Input vs Untied Output | **0.948573** |
 
-Lower = more similar. The tied matrix is closer to the untied output embedding than to the untied input embedding, consistent with the output-bias hypothesis.
+Lower = more similar. For OLMo and Qwen3, the tied matrix is closest to the untied output. For GPT-Neo/Pythia, the two untied matrices from different families are most similar to each other, but the tied matrix is still closer to output than to input (1.035 vs 1.462), consistent with the output-bias hypothesis.
