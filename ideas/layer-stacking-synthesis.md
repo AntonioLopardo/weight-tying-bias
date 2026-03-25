@@ -92,6 +92,8 @@ Tokens → [Tied Embedding — output-space biased]
 - Early layer stacking: costs only K extra forward passes per token (no new parameters)
 - Combined: same parameter count as untied baseline, but with compensatory early depth
 
+**Analogy:** This is to ALBERT what RYS is to vanilla transformers — using layer repetition to get depth for free, but here motivated by the specific pathology introduced by weight tying.
+
 **Training consideration:** Layers applied K times receive K gradient contributions in the backward pass. This might naturally amplify input-side gradients for the shared layer, partially self-correcting the output-space bias without any explicit gradient scaling intervention.
 
 ---
@@ -124,3 +126,13 @@ Connects to:
 - Layer stacking is a pure inference trick — implement as a wrapper around HuggingFace `generate()`, no training required
 
 **Target deliverable:** A figure showing stacking performance delta as a function of which layer block is stacked, overlaid on the tuned lens KL curve — for both tied and untied models. If the optimal stacking zone aligns with the steep-KL-decline zone, and if this differs between tied/untied models, it's a publishable finding.
+
+---
+
+## Existing Infrastructure
+
+All ideas can be tested without new training — experimental infrastructure already exists:
+- Tuned lens KL curves: `experiments/2_tuned_lens/`
+- Paired tied/untied OLMo-1B models: already used throughout the paper
+- Benchmark evaluation: `lm-evaluation-harness` (or standalone)
+- Layer stacking: pure inference trick, implement as a wrapper around HuggingFace `generate()`
