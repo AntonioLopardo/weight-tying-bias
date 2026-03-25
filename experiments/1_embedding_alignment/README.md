@@ -24,9 +24,10 @@ Compares tied embedding matrices to untied input/output matrices using:
 | `compare_embeddings.py` | Single model analysis | Metrics in Table 1 |
 | `compare_cross_model.py` | OLMo tied vs untied | Table 1 |
 | `compare_pythia_gptneo.py` | Pythia-2.8B vs GPT-Neo-2.7B | Table 1 |
-| `compare_qwen.py` | Qwen3-4B vs Qwen3-8B | (different dims, see KNN) |
-| `nn_k1.py` | KNN@1 overlap (Qwen only) | Exploratory |
 | [`Appendix_B/reproduce_table5.py`](Appendix_B/) | KNN@10 overlap (all 3 families) | Table 5 |
+| [`Appendix_B/reproduce_spectral_distance.py`](Appendix_B/) | Omnibus embedding spectral distance | Appendix B |
+| [`Appendix_B/compare_qwen.py`](Appendix_B/) | Qwen3-4B vs Qwen3-8B (different dims) | Exploratory |
+| [`Appendix_B/nn_k1.py`](Appendix_B/) | KNN@1 overlap (Qwen only) | Exploratory |
 
 ## Reproducing Figure 1
 
@@ -67,7 +68,7 @@ python compare_embeddings.py --hf-model EleutherAI/pythia-2.8b    # Untied
 python compare_pythia_gptneo.py                                    # Cross-model
 
 # Table 5: KNN@10 overlap
-python nn_k1.py
+python Appendix_B/reproduce_table5.py
 ```
 
 ## Expected Results (Table 1)
