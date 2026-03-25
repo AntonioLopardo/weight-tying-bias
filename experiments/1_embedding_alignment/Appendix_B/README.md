@@ -1,4 +1,19 @@
-# Appendix B: KNN Overlap Analysis (Table 5)
+# Appendix B: KNN & Spectral Distance Analysis
+
+**Paper Outputs:** Table 5, Spectral Distance
+
+## Scripts
+
+| Script | Description | Output |
+|--------|-------------|--------|
+| `reproduce_table5.py` | KNN@10 overlap (all 3 model families) | Table 5 |
+| `reproduce_spectral_distance.py` | Omnibus embedding spectral distance | Appendix B |
+| `compare_qwen.py` | Qwen3-4B vs Qwen3-8B embedding alignment | Exploratory |
+| `nn_k1.py` | KNN@1 overlap (Qwen only) | Exploratory |
+
+---
+
+# KNN@10 Overlap (Table 5)
 
 **Paper Output:** Table 5
 
