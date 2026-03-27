@@ -31,11 +31,7 @@ This metric complements Procrustes alignment (Table 1) by capturing local neighb
 
 ### Prerequisites
 
-1. **Python environment** with `torch`, `transformers`:
-
-```bash
-source .venv/bin/activate
-```
+1. **Python environment** with `torch`, `transformers` (see root README for setup)
 
 2. **HuggingFace access** — all models downloaded automatically
 

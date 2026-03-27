@@ -22,11 +22,7 @@ Uses the same `track_evolution.py` script and metrics (cumulative drift + per-st
 
 ### Prerequisites
 
-1. **Python environment** with `torch`, `transformers`, `matplotlib`, `tqdm`:
-
-```bash
-source .venv/bin/activate
-```
+1. **Python environment** with `torch`, `transformers`, `matplotlib`, `tqdm` (see root README for setup)
 
 2. **HuggingFace access** — checkpoints downloaded automatically
 

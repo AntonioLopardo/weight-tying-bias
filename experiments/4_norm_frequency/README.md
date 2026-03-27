@@ -41,9 +41,6 @@ Plots L2 norm of each token's embedding against its log-frequency in a corpus. C
 ### Generate Figure 5
 
 ```bash
-# Activate virtual environment
-source .venv/bin/activate
-
 # Generate Figure 5 with default settings
 python main.py plot-figure5 \
     --config configs/tok_config_figure5_local.json \

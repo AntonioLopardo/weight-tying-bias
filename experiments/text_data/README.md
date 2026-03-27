@@ -9,6 +9,7 @@ Shared training data used across experiments. Multiple experiment configs refere
 Used by:
 - **Experiment 4** (Norm-Frequency): training tied and untied OLMo-1B for 10k steps
 - **Experiment 5** (Gradient Flow): training tied OLMo-1B with gradient provenance tracking for 1k steps
+- **Experiment 6** (Gradient Scaling): training tied OLMo-1B with gradient scaling hooks
 
 ### Preparing the data
 

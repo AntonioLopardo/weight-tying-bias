@@ -36,8 +36,6 @@ Measures gradient contributions from input vs output layers to the shared embedd
 
 ```bash
 # From the repository root
-source .venv/bin/activate
-
 # Generate Figure 4 from existing CSV data (first 1000 steps, matching paper)
 python plot_gradient_provenance.py \
     OLMo-1B-tied-no-scale-10000/gradient_provenance.csv \

@@ -1,68 +1,49 @@
 # Gradient Scaling Checkpoints
 
-We are working on adding the model checkpoints in the future.
-
 ## Paper Context
 
-These checkpoints support **Section 6 (Causal Ablation: Selective Gradient Scaling)** and **Table 2 / Table 6** in the paper.
+These checkpoints support **Section 6 (Causal Ablation: Selective Gradient Scaling)**, **Table 2**, **Table 6**, and **Table 7** in the paper.
 
 The experiment tests whether gradient imbalance *causes* the unembedding bias by artificially amplifying input-layer gradients during training.
 
-## Expected Contents
+## Contents
 
-Once available, this directory will contain OLMo-1B checkpoints trained from scratch with various gradient scaling configurations:
+Checkpoints are stored alongside their training configs in the parent directory:
 
-### Table 2: Gradient Scaling at Step 10K (20B tokens)
+### Table 2 / Table 7 (Step 10K, 20B tokens)
 
-| Checkpoint | Input Gradient Scale | vs Untied Input | vs Untied Output |
-|-----------|---------------------|-----------------|------------------|
-| `step10000-baseline/` | 1× (baseline) | 0.216 | 0.384 |
-| `step10000-input5x/` | 5× | 0.222 | 0.369 |
+| Directory | Input Gradient Scale | Description |
+|-----------|---------------------|-------------|
+| `../OLMo-1B-tied-no-scale-10000/` | 1× (baseline) | Tied baseline |
+| `../OLMo-1B-tied-emb5-10000/` | 5× | Tied with input gradient scaling |
 
-### Table 6 (Appendix E): Gradient Scaling at Step 1K
+### Table 6 (Appendix E, Step 1K)
 
-| Checkpoint | Input Gradient Scale | vs Untied Input | vs Untied Output |
-|-----------|---------------------|-----------------|------------------|
-| `step1000-baseline/` | 1× | 0.172 | 0.197 |
-| `step1000-input2x/` | 2× | 0.173 | 0.197 |
-| `step1000-input10x/` | 10× | 0.173 | 0.190 |
+| Directory | Input Gradient Scale | Description |
+|-----------|---------------------|-------------|
+| `../Appendix_E/OLMo-1B-tied-no-scale-1000/` | 1× (baseline) | Tied baseline at step 1K |
+| `../Appendix_E/OLMo-1B-tied-emb2-1000/` | 2× | Tied with 2× input scaling |
+| `../Appendix_E/OLMo-1B-tied-emb10-1000/` | 10× | Tied with 10× input scaling |
 
-### Gradient Provenance Analysis (Figure 4)
-
-| Directory | Steps Logged | Purpose |
-|-----------|-------------|---------|
-| `grad-provenance-1000/` | 0-1000 | Main figure: gradient flow over first 1000 steps |
-
-**Contents per checkpoint:**
-- `gradient_log.csv` - Per-step L2 norms of input vs output gradients
-- `model.pt` - Model weights at checkpoint
+Each checkpoint directory contains:
+- `config.yaml` — OLMo training configuration
+- `model.pt` — Model weights (gitignored, download via `./download_artifacts.sh 6`)
 
 ## Training Your Own
 
-These checkpoints require training OLMo from scratch with modified gradient hooks.
+The models were trained using the **bundled OLMo fork** (`../../OLMo/`) with gradient scaling hooks. See [`../../OLMo/PROVENANCE.md`](../../OLMo/PROVENANCE.md) for details on the modifications. The key config parameter is `embedding_grad_scale_factor`.
 
-### Step 1: Set up OLMo
 ```bash
-git clone https://github.com/allenai/OLMo.git
-cd OLMo
-pip install -e .
-```
+# From the repository root
+pip install -e './OLMo[all]'
 
-### Step 2: Modify for gradient scaling
+# Train tied baseline (no scaling)
+torchrun --nproc_per_node=8 OLMo/scripts/train.py \
+    experiments/6_gradient_scaling/OLMo-1B-tied-no-scale-10000/config.yaml
 
-Add gradient hooks to scale input gradients (see `experiments/5_gradient_flow/gradient_provenance_tracking.md`):
-
-```python
-# In the model's embedding layer
-def scale_input_grad(grad):
-    return grad * SCALE_FACTOR  # e.g., 5.0
-
-model.transformer.wte.weight.register_hook(scale_input_grad)
-```
-
-### Step 3: Train with standard OLMo config
-```bash
-torchrun --nproc_per_node=8 scripts/train.py configs/official/OLMo-1B.yaml
+# Train tied with 5× input gradient scaling
+torchrun --nproc_per_node=8 OLMo/scripts/train.py \
+    experiments/6_gradient_scaling/OLMo-1B-tied-emb5-10000/config.yaml
 ```
 
 **Resource Requirements:**

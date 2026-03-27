@@ -26,11 +26,7 @@ Tracks how input and output embedding matrices evolve during training in untied 
 
 ### Prerequisites
 
-1. **Python environment** with `torch`, `transformers`, `matplotlib`, `tqdm`:
-
-```bash
-source .venv/bin/activate
-```
+1. **Python environment** with `torch`, `transformers`, `matplotlib`, `tqdm` (see root README for setup)
 
 2. **HuggingFace access** — model checkpoints are downloaded automatically from the Hub
 

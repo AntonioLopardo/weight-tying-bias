@@ -33,6 +33,7 @@ Compares tied embedding matrices to untied input/output matrices using:
 
 ### Prerequisites
 
+- **Python environment** with `torch`, `transformers`, `numpy`, `matplotlib`
 - Models are downloaded automatically from HuggingFace:
   - `allenai/OLMo-1B-hf` (tied)
   - `allenai/OLMo-1B-0724-hf` (untied)
