@@ -15,18 +15,18 @@ Weight tying—sharing parameters between input and output embedding matrices—
 
 ## Paper → Code Mapping
 
-| Section | Experiment | Outputs | Status |
-|---------|-----------|---------|--------|
-| 4.1 | Embedding Alignment | Table 1, Figure 1 | Scripts exist, needs testing |
-| 4.2 | Tuned Lens Analysis | Figure 2 | Scripts + pre-trained lenses |
-| 5.1 | Embedding Evolution | Figure 3 | Script exists, needs testing |
-| 5.2 | Norm-Frequency | Figure 5 | Scripts exist, needs testing |
-| 5.3 | Gradient Flow | Figure 4 | Plotting script + pre-generated figures |
-| 6 | Gradient Scaling | Table 2 | Checkpoints available |
-| App. B | KNN Overlap | Table 5 | Script exists |
-| App. C | Tuned Lens (extended) | Figures 6, 7 | Scripts + pre-generated figures |
-| App. D | Evolution (extended) | Figures 8, 9 | Script exists |
-| App. E | Scaling (extended) | Table 6 | Checkpoints available |
+| Section | Experiment | Outputs |
+|---------|-----------|---------|
+| 4.1 | Embedding Alignment | Table 1, Figure 1 |
+| 4.2 | Tuned Lens Analysis | Figure 2 |
+| 5.1 | Embedding Evolution | Figure 3 |
+| 5.2 | Norm-Frequency | Figure 5 |
+| 5.3 | Gradient Flow | Figure 4 |
+| 6 | Gradient Scaling | Table 2 |
+| App. B | KNN Overlap | Table 5 |
+| App. C | Tuned Lens (extended) | Figures 6, 7 |
+| App. D | Evolution (extended) | Figures 8, 9 |
+| App. E | Scaling (extended) | Tables 6, 7 |
 
 ## Repository Structure
 
@@ -38,7 +38,7 @@ weight-tying-bias/
 │   ├── 3_embedding_evolution/    # Section 5.1: Figures 3, 8, 9
 │   ├── 4_norm_frequency/         # Section 5.2: Figure 5
 │   ├── 5_gradient_flow/          # Section 5.3: Figure 4
-│   └── 6_gradient_scaling/       # Section 6: Tables 2, 6
+│   └── 6_gradient_scaling/       # Section 6: Tables 2, 6, 7
 │
 ├── OLMo/                         # Modified fork of allenai/OLMo (v0.6.0)
 ├── tuned-lens/                   # Unmodified copy of AlignmentResearch/tuned-lens (v0.2.0)
