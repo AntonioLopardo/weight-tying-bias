@@ -24,8 +24,11 @@ PyYAML>=6.0
 # Sparse eigendecomposition (Appendix B — spectral distance)
 scipy>=1.10
 
-# Optional: for OLMo-native checkpoint loading (Experiments 4, 5)
-# ai2-olmo>=0.3.0
+# OLMo-native checkpoint loading (Experiments 4, 5, evaluation)
+# Loaded from the local OLMo/ submodule — no pip install needed.
 
-# Optional: for faster tokenization
-# tokenizers>=0.15.0
+# Tokenization (evaluation)
+tokenizers>=0.15.0
+
+# Evaluation (lm-evaluation-harness)
+lm_eval>=0.4.0
