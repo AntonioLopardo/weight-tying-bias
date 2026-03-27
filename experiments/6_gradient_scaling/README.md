@@ -22,29 +22,32 @@ With 5× input gradient scaling at step 10K:
 | [`Appendix_E/reproduce_table6.py`](Appendix_E/) | Reproduces Table 6 (step 1K, scaling factors x2 and x10) |
 | [`Appendix_E/reproduce_table7.py`](Appendix_E/) | Reproduces Table 7 (downstream evaluation: tied vs tied-emb5) |
 
-## Reproducing Table 2
+## Prerequisites
 
-### Prerequisites
+**Python environment** with `torch`, `transformers`, `pandas`, `lm_eval`, `tokenizers` (see root README for setup)
 
-1. **Model checkpoints** in this directory:
-   - `OLMo-1B-tied-no-scale-10000/model.pt` - Tied baseline (no scaling) at step 10K
-   - `OLMo-1B-tied-emb5-10000/model.pt` - Tied with 5× input gradient scaling at step 10K
+**Model checkpoints** (weight files are gitignored — download via `./download_artifacts.sh 6`):
+- `OLMo-1B-tied-no-scale-10000/model.pt` — Tied baseline (no scaling) at step 10K
+- `OLMo-1B-tied-emb5-10000/model.pt` — Tied with 5× input gradient scaling at step 10K
+- `Appendix_E/OLMo-1B-tied-no-scale-1000/model.pt` — Tied baseline at step 1K
+- `Appendix_E/OLMo-1B-tied-emb2-1000/model.pt` — Tied with 2× scaling at step 1K
+- `Appendix_E/OLMo-1B-tied-emb10-1000/model.pt` — Tied with 10× scaling at step 1K
 
-2. **Untied reference** (downloaded automatically from HuggingFace):
-   - `allenai/OLMo-1B-0724-hf` at revision `step10000-tokens20B`
+**Untied reference** (downloaded automatically from HuggingFace):
+- `allenai/OLMo-1B-0724-hf` at revisions `step10000-tokens20B` (Table 2) and `step1000-tokens2B` (Table 6)
 
-3. **Training data** (shared across experiments, only needed if retraining):
-   - `../text_data/dolma_v1_7/dolma_v1_7_30B.npy` — see `../text_data/README.md`
-
-### Compute Alignment (Table 2)
+## Reproducing Tables
 
 ```bash
-# Reproduce Table 2
+# Table 2: Procrustes alignment at step 10K
 python reproduce_table2.py
 
-# Output:
-# Tied (no scaling)    vs Untied Input: 0.216   vs Untied Output: 0.384
-# Tied (input x5)      vs Untied Input: 0.222   vs Untied Output: 0.369
+# Table 6 (Appendix E): Procrustes alignment at step 1K
+python Appendix_E/reproduce_table6.py
+
+# Table 7 (Appendix E): Downstream evaluation (tied vs tied-emb5)
+python Appendix_E/reproduce_table7.py
+# Requires: lm_eval, tokenizers, OLMo tokenizer at OLMo/olmo_data/tokenizers/
 ```
 
 ### Expected Results (Table 2, Step 10K)

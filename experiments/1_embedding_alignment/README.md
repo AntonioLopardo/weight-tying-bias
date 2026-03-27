@@ -84,3 +84,36 @@ python Appendix_B/reproduce_table5.py
 | Input (U) → Output (U) | -0.001 | 0.456 | 0.518 |
 | Output (U) → Tied | 0.001 | 0.507 | **0.637** |
 | Input (U) → Tied | 0.000 | 0.376 | 0.507 |
+
+---
+
+## Appendix B: KNN Overlap and Spectral Distance (Table 5)
+
+KNN@10 overlap measures local neighborhood structure between embedding matrices — a complement to the global Procrustes alignment in Table 1.
+
+```bash
+# Table 5: KNN@10 overlap
+python Appendix_B/reproduce_table5.py
+
+# Spectral distance (omnibus embedding approach)
+python Appendix_B/reproduce_spectral_distance.py
+```
+
+### Expected Results (Table 5)
+
+| Comparison | KNN@10 |
+|------------|--------|
+| **OLMo-1B (tied) vs OLMo-1B-0724 (untied)** | |
+| Tied vs Untied Input | 0.496 |
+| Tied vs Untied Output | **0.733** |
+| Untied Input vs Untied Output | 0.455 |
+| **Qwen3-4B (tied) vs Qwen3-8B (untied)** | |
+| Tied vs Untied Input | 0.366 |
+| Tied vs Untied Output | **0.710** |
+| Untied Input vs Untied Output | 0.366 |
+| **GPT-Neo-2.7B (tied) vs Pythia-2.8B (untied)** | |
+| Tied vs Untied Input | 0.372 |
+| Tied vs Untied Output | 0.408 |
+| Untied Input vs Untied Output | **0.611** |
+
+**Note:** GPT-Neo/Pythia uses aligned vocabulary (~36,938 common tokens). KNN@10 works across different hidden dimensions (Qwen3-4B vs 8B) because neighbors are identified by token index.
