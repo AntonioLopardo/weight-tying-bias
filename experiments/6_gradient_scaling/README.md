@@ -1,6 +1,6 @@
 # Experiment 6: Gradient Scaling Ablation (Section 6)
 
-**Paper Outputs:** Table 2, Table 6 (Appendix E)
+**Paper Outputs:** Table 2, Table 6 (Appendix E), Table 7 (Appendix E)
 
 ## Overview
 
@@ -20,6 +20,7 @@ With 5× input gradient scaling at step 10K:
 |--------|-------------|
 | `reproduce_table2.py` | Reproduces Table 2 from local checkpoints + official HF reference |
 | [`Appendix_E/reproduce_table6.py`](Appendix_E/) | Reproduces Table 6 (step 1K, scaling factors x2 and x10) |
+| [`Appendix_E/reproduce_table7.py`](Appendix_E/) | Reproduces Table 7 (downstream evaluation: tied vs tied-emb5) |
 
 ## Reproducing Table 2
 
@@ -38,9 +39,6 @@ With 5× input gradient scaling at step 10K:
 ### Compute Alignment (Table 2)
 
 ```bash
-# Activate virtual environment
-source .venv/bin/activate
-
 # Reproduce Table 2
 python reproduce_table2.py
 
@@ -63,6 +61,20 @@ python reproduce_table2.py
 | Tied (no scaling) | 0.172 | 0.197 |
 | Tied (input ×2) | 0.173 | 0.197 |
 | Tied (input ×10) | 0.173 | **0.190** |
+
+### Expected Results (Table 7, Appendix E, Step 10K)
+
+| Benchmark | Tied | Tied (input ×5) |
+|-----------|------|-----------------|
+| WikiText-2 PPL ↓ | **35.71** | 36.64 |
+| PIQA | 0.620 | **0.631** |
+| HellaSwag | **0.329** | 0.326 |
+| Winogrande | **0.514** | 0.509 |
+| ARC-Easy | 0.396 | **0.402** |
+| ARC-Challenge | 0.233 | **0.241** |
+| BoolQ | **0.576** | 0.548 |
+| OpenBookQA | 0.256 | **0.278** |
+| BLiMP | 0.755 | **0.757** |
 
 ---
 
@@ -107,7 +119,6 @@ The training configs are stored alongside the model checkpoints:
 
 - **Baseline (no scaling)**: `OLMo-1B-tied-no-scale-10000/config.yaml` (sets `embedding_grad_scale_factor: null`)
 - **5× input scaling**: `OLMo-1B-tied-emb5-10000/config.yaml` (sets `embedding_grad_scale_factor: 5.0`)
-- **Untied reference**: `OLMo-1B-untied-10000/config.yaml` (sets `weight_tying: false`)
 
 ### Train Models
 
@@ -120,10 +131,6 @@ torchrun --nproc_per_node=8 OLMo/scripts/train.py \
 # Train tied with 5× input gradient scaling
 torchrun --nproc_per_node=8 OLMo/scripts/train.py \
     experiments/6_gradient_scaling/OLMo-1B-tied-emb5-10000/config.yaml
-
-# Train untied reference
-torchrun --nproc_per_node=8 OLMo/scripts/train.py \
-    experiments/6_gradient_scaling/OLMo-1B-untied-10000/config.yaml
 ```
 
 Checkpoints will be saved to each config's `save_folder`.
