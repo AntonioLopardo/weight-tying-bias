@@ -7,18 +7,12 @@ from typing import Optional
 
 NATS_TO_BITS = 1.0 / np.log(2)
 
-SAMPLE_TEXTS = [
-    "The quick brown fox jumps over the lazy dog. This is a simple sentence to test the language model's ability to predict tokens.",
-    "In the field of machine learning, neural networks have become increasingly important for a wide variety of tasks including natural language processing.",
-    "The development of large language models has revolutionized how we interact with artificial intelligence systems.",
-    "Scientists have discovered new evidence that suggests the universe may be expanding at a faster rate than previously thought.",
-    "The economic impact of climate change continues to be a major concern for policymakers around the world.",
-    "Recent advances in quantum computing have opened up new possibilities for solving complex computational problems.",
-    "The history of human civilization is marked by periods of great innovation and technological advancement.",
-    "Music has been an integral part of human culture for thousands of years, serving both social and artistic purposes.",
-    "The study of philosophy helps us understand fundamental questions about existence, knowledge, and ethics.",
-    "Modern medicine has made remarkable progress in treating diseases that were once considered incurable.",
-]
+
+def load_eval_texts(min_char_length=20):
+    """Load WikiText-2 test set for tuned lens evaluation."""
+    from datasets import load_dataset
+    ds = load_dataset("wikitext", "wikitext-2-raw-v1", split="test")
+    return [t for t in ds["text"] if len(t.strip()) >= min_char_length]
 
 
 def compute_kl_divergence(log_p: torch.Tensor, log_q: torch.Tensor, dim: int = -1) -> torch.Tensor:

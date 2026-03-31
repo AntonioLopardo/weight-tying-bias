@@ -15,7 +15,7 @@ from tuned_lens.nn.lenses import TunedLens, LogitLens
 SCRIPT_DIR = Path(__file__).resolve().parent
 
 from utils.tuned_lens_utils import (
-    compute_bias_per_layer, load_model_and_tokenizer, SAMPLE_TEXTS,
+    compute_bias_per_layer, load_model_and_tokenizer, load_eval_texts,
 )
 
 
@@ -80,9 +80,10 @@ def main():
 
     logit_lens = LogitLens.from_model(model).to(device)
 
-    print(f"\nComputing bias for {len(SAMPLE_TEXTS)} sample texts...")
+    eval_texts = load_eval_texts()
+    print(f"\nComputing bias for {len(eval_texts)} texts (WikiText-2 test)...")
     tuned_kl, logit_kl = compute_bias_per_layer(
-        model, tokenizer, tuned_lens, SAMPLE_TEXTS, device, logit_lens=logit_lens
+        model, tokenizer, tuned_lens, eval_texts, device, logit_lens=logit_lens
     )
 
     print("\n=== Results ===")

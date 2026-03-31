@@ -11,7 +11,7 @@ from pathlib import Path
 SCRIPT_DIR = Path(__file__).resolve().parent
 
 from utils.tuned_lens_utils import (
-    compute_bias_per_layer, load_model_and_tokenizer, SAMPLE_TEXTS,
+    compute_bias_per_layer, load_model_and_tokenizer, load_eval_texts,
 )
 
 TRAINED_LENSES_DIR = SCRIPT_DIR / "trained_lenses"
@@ -19,6 +19,9 @@ TRAINED_LENSES_DIR = SCRIPT_DIR / "trained_lenses"
 
 def main():
     device = "cuda" if torch.cuda.is_available() else "cpu"
+
+    eval_texts = load_eval_texts()
+    print(f"Eval set: {len(eval_texts)} texts (WikiText-2 test)")
 
     models_to_compare = [
         ("allenai/OLMo-1B-0724-hf", "OLMo-1B-0724"),
@@ -39,7 +42,7 @@ def main():
             model, lens_resource_id=local_lens_path, weights_only=True
         ).to(device)
 
-        tuned_kl = compute_bias_per_layer(model, tokenizer, tuned_lens, SAMPLE_TEXTS, device)
+        tuned_kl = compute_bias_per_layer(model, tokenizer, tuned_lens, eval_texts, device)
         results[label] = tuned_kl
 
         del model, tuned_lens, tokenizer

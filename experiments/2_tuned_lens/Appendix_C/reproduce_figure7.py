@@ -20,7 +20,7 @@ from pathlib import Path
 SCRIPT_DIR = Path(__file__).resolve().parent
 
 from utils.tuned_lens_utils import (
-    compute_bias_per_layer, load_model_and_tokenizer, SAMPLE_TEXTS,
+    compute_bias_per_layer, load_model_and_tokenizer, load_eval_texts,
 )
 
 TRAINED_LENSES_DIR = SCRIPT_DIR.parent / "trained_lenses"
@@ -40,6 +40,9 @@ MODELS = [
 def main():
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using device: {device}")
+
+    eval_texts = load_eval_texts()
+    print(f"Eval set: {len(eval_texts)} texts (WikiText-2 test)")
 
     results = {}
 
@@ -64,7 +67,7 @@ def main():
         tuned_lens = TunedLens.from_model_and_pretrained(model, lens_resource_id=local_lens_path, weights_only=True).to(device)
         logit_lens = LogitLens.from_model(model).to(device)
 
-        tuned_kl, logit_kl = compute_bias_per_layer(model, tokenizer, tuned_lens, SAMPLE_TEXTS, device, logit_lens=logit_lens)
+        tuned_kl, logit_kl = compute_bias_per_layer(model, tokenizer, tuned_lens, eval_texts, device, logit_lens=logit_lens)
 
         results[label] = {"tuned_kl": tuned_kl, "logit_kl": logit_kl, "num_layers": model.config.num_hidden_layers}
 
